@@ -1,3 +1,7 @@
+@import 'primereact/resources/themes/lara-light-blue/theme.css';
+@import 'primereact/resources/primereact.min.css';
+@import 'primeicons/primeicons.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,10 +10,28 @@
 All colors MUST be HSL.
 */
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
 @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
+    
+    /* Notes Feed specific colors */
+    --notes-header-bg: 0 0% 100%;
+    --notes-header-border: 218 11% 87%;
+    --notes-content-bg: 210 40% 97%;
+    --notes-timeline-color: 217 82% 66%;
+    --notes-timeline-dot-bg: 0 0% 100%;
+    --notes-card-bg: 0 0% 100%;
+    --notes-card-border: 214 27% 87%;
+    --notes-text-primary: 210 18% 11%;
+    --notes-text-secondary: 215 14% 42%;
+    --notes-text-meta: 215 14% 42%;
+    --notes-badge-bg: 210 20% 96%;
+    --notes-badge-text: 215 25% 27%;
+    --notes-input-border: 220 13% 82%;
+    --notes-button-disabled: 215 21% 39%;
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -101,5 +123,40 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
   }
+}
+
+/* Custom styling for Notes Feed Sidebar */
+.notes-feed-sidebar .p-sidebar {
+  width: 756px !important;
+  height: 100vh !important;
+  border-radius: 0 !important;
+  box-shadow: 0px 8px 10px -6px rgba(0, 0, 0, 0.10) !important;
+}
+
+.notes-feed-sidebar .p-sidebar-content {
+  padding: 0 !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+/* Override PrimeReact input styles to match design */
+.notes-feed-sidebar .p-inputtext {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  border-color: #CBD5E1;
+  box-shadow: 0px 1px 2px rgba(18, 18, 23, 0.05);
+}
+
+.notes-feed-sidebar .p-dropdown {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  border-color: #CBD5E1;
+  box-shadow: 0px 1px 2px rgba(18, 18, 23, 0.05);
+}
+
+.notes-feed-sidebar .p-button {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
 }
