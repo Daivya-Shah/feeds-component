@@ -221,8 +221,8 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
       className="notes-feed-sidebar-exact"
     >
       <div style={{
-        width: '756px',
-        height: '1024px',
+        width: '100%',
+        height: '100%',
         boxShadow: '0px 8px 10px -6px rgba(0, 0, 0, 0.10)',
         overflow: 'hidden',
         outline: '1px #E2E8F0 solid',
