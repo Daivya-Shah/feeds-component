@@ -221,8 +221,8 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
       className="notes-feed-sidebar-exact"
     >
       <div style={{
-        width: '756px',
-        height: '1024px',
+        width: '100%',
+        height: '100%',
         boxShadow: '0px 8px 10px -6px rgba(0, 0, 0, 0.10)',
         overflow: 'hidden',
         outline: '1px #E2E8F0 solid',
@@ -230,7 +230,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        display: 'inline-flex'
+        display: 'flex'
       }}>
         {/* Header */}
         <div style={{
@@ -565,11 +565,11 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
         {/* Content Area */}
         <div style={{
           alignSelf: 'stretch',
-          height: '896px',
+          flex: '1',
           padding: '24px',
           position: 'relative',
           background: '#F8FAFC',
-          overflow: 'hidden',
+          overflow: 'auto',
           flexDirection: 'column',
           justifyContent: 'flex-end',
           alignItems: 'flex-start',
