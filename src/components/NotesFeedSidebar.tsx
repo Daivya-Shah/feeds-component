@@ -235,10 +235,10 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
         {/* Header */}
         <div style={{
           alignSelf: 'stretch',
-          paddingLeft: '20px',
-          paddingRight: '20px',
-          paddingTop: '11.50px',
-          paddingBottom: '11.50px',
+          paddingLeft: '2.6%',
+          paddingRight: '2.6%',
+          paddingTop: '1.1%',
+          paddingBottom: '1.1%',
           background: 'white',
           borderBottom: '1px #DFE1E6 solid',
           justifyContent: 'space-between',
@@ -249,47 +249,47 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
           <div style={{
             justifyContent: 'flex-start',
             alignItems: 'center',
-            gap: '8px',
+            gap: '1.1%',
             display: 'flex'
           }}>
             <div data-size="24x24" style={{
-              width: '24px',
-              height: '24px',
+              width: '3.2%',
+              height: '2.3%',
               position: 'relative',
               overflow: 'hidden'
             }}>
               <div style={{
-                width: '13.50px',
-                height: '17.50px',
-                left: '5.25px',
-                top: '3.25px',
+                width: '1.8%',
+                height: '1.7%',
+                left: '0.7%',
+                top: '0.3%',
                 position: 'absolute',
                 background: '#4B5563'
               }}></div>
             </div>
             <div style={{
               color: '#0F172A',
-              fontSize: '16px',
+              fontSize: '2.1vw',
               fontFamily: 'Inter',
               fontWeight: '600',
-              lineHeight: '22px',
+              lineHeight: '2.2%',
               wordWrap: 'break-word'
             }}>{clientName}</div>
             <div style={{
               color: '#6B7280',
-              fontSize: '16px',
+              fontSize: '2.1vw',
               fontFamily: 'Inter',
               fontWeight: '600',
-              lineHeight: '22px',
+              lineHeight: '2.2%',
               wordWrap: 'break-word'
             }}>Notes</div>
             <div data-circle="False" data-severity="Secondary" data-size="Small" style={{
-              height: '17.50px',
-              minWidth: '17.50px',
-              paddingLeft: '7px',
-              paddingRight: '7px',
+              height: '1.7%',
+              minWidth: '2.3%',
+              paddingLeft: '0.9%',
+              paddingRight: '0.9%',
               background: '#F1F5F9',
-              borderRadius: '6px',
+              borderRadius: '0.8%',
               flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
@@ -297,10 +297,10 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
             }}>
               <div style={{
                 color: '#475569',
-                fontSize: '16px',
+                fontSize: '2.1vw',
                 fontFamily: 'Inter',
                 fontWeight: '600',
-                lineHeight: '22px',
+                lineHeight: '2.2%',
                 wordWrap: 'break-word'
               }}>8</div>
             </div>
@@ -309,10 +309,10 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
           {/* Empty space */}
           <div style={{
             color: '#026BB6',
-            fontSize: '16px',
+            fontSize: '2.1vw',
             fontFamily: 'Inter',
             fontWeight: '600',
-            lineHeight: '22px',
+            lineHeight: '2.2%',
             wordWrap: 'break-word'
           }}> </div>
 
@@ -320,51 +320,51 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
           <div style={{
             justifyContent: 'flex-start',
             alignItems: 'center',
-            gap: '16px',
+            gap: '2.1%',
             display: 'flex'
           }}>
             <div style={{
               justifyContent: 'flex-end',
               alignItems: 'center',
-              gap: '16px',
+              gap: '2.1%',
               display: 'flex'
             }}>
               {/* Search Input */}
               <div data-show-helper="false" data-state="Default" data-invalid="False" data-show-right-icon="false" data-show-left-icon="true" data-float-label="False" data-show-label="false" data-show-text="true" data-disabled="False" data-filled="False" data-size="Normal" style={{
-                width: '216px',
+                width: '28.6%',
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
                 alignItems: 'flex-start',
-                gap: '4px',
+                gap: '0.5%',
                 display: 'inline-flex'
               }}>
                 <div style={{
                   alignSelf: 'stretch',
-                  paddingLeft: '12px',
-                  paddingRight: '12px',
-                  paddingTop: '8px',
-                  paddingBottom: '8px',
+                  paddingLeft: '1.6%',
+                  paddingRight: '1.6%',
+                  paddingTop: '1.1%',
+                  paddingBottom: '1.1%',
                   background: 'white',
                   boxShadow: '0px 1px 2px rgba(18, 18, 23, 0.05)',
-                  borderRadius: '6px',
+                  borderRadius: '0.8%',
                   outline: '1px #CBD5E1 solid',
                   outlineOffset: '-1px',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
-                  gap: '8px',
+                  gap: '1.1%',
                   display: 'inline-flex'
                 }}>
                   <div style={{
-                    width: '16px',
-                    height: '16px',
+                    width: '2.1%',
+                    height: '1.6%',
                     position: 'relative',
                     overflow: 'hidden'
                   }}>
                     <div style={{
-                      width: '13.33px',
-                      height: '13.33px',
-                      left: '1.33px',
-                      top: '1.33px',
+                      width: '1.8%',
+                      height: '1.3%',
+                      left: '0.2%',
+                      top: '0.1%',
                       position: 'absolute',
                       background: '#94A3B8'
                     }}></div>
@@ -394,10 +394,10 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                           outline: 'none',
                           background: 'transparent',
                           color: '#64748B',
-                          fontSize: '16px',
+                          fontSize: '2.1vw',
                           fontFamily: 'Inter',
                           fontWeight: '600',
-                          lineHeight: '22px',
+                          lineHeight: '2.2%',
                           wordWrap: 'break-word'
                         }}
                       />
@@ -410,35 +410,35 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
             <div style={{
               justifyContent: 'flex-end',
               alignItems: 'center',
-              gap: '16px',
+              gap: '2.1%',
               display: 'flex'
             }}>
               {/* Category Filter */}
               <div data-show-helper="false" data-state="Default" data-invalid="False" data-show-right-icon="true" data-show-left-icon="false" data-float-label="False" data-show-label="false" data-show-text="true" data-disabled="False" data-filled="False" data-size="Normal" style={{
                 position: 'relative',
-                width: '169px',
+                width: '22.4%',
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
                 alignItems: 'flex-start',
-                gap: '4px',
+                gap: '0.5%',
                 display: 'inline-flex'
               }}>
                 <div 
                   onClick={() => setFilterDropdownOpen(!filterDropdownOpen)}
                   style={{
                     alignSelf: 'stretch',
-                    paddingLeft: '12px',
-                    paddingRight: '12px',
-                    paddingTop: '8px',
-                    paddingBottom: '8px',
+                    paddingLeft: '1.6%',
+                    paddingRight: '1.6%',
+                    paddingTop: '1.1%',
+                    paddingBottom: '1.1%',
                     background: 'white',
                     boxShadow: '0px 1px 2px rgba(18, 18, 23, 0.05)',
-                    borderRadius: '6px',
+                    borderRadius: '0.8%',
                     outline: '1px #CBD5E1 solid',
                     outlineOffset: '-1px',
                     justifyContent: 'flex-start',
                     alignItems: 'center',
-                    gap: '8px',
+                    gap: '1.1%',
                     display: 'inline-flex',
                     cursor: 'pointer'
                   }}
@@ -460,27 +460,30 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                       <div style={{
                         flex: '1 1 0',
                         color: '#64748B',
-                        fontSize: '16px',
+                        fontSize: '2.1vw',
                         fontFamily: 'Inter',
                         fontWeight: '600',
-                        lineHeight: '22px',
-                        wordWrap: 'break-word'
+                        lineHeight: '2.2%',
+                        wordWrap: 'break-word',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis'
                       }}>
                         {selectedCategory || 'Filter by Category'}
                       </div>
                     </div>
                   </div>
                   <div style={{
-                    width: '16px',
-                    height: '16px',
+                    width: '2.1%',
+                    height: '1.6%',
                     position: 'relative',
                     overflow: 'hidden'
                   }}>
                     <div style={{
-                      width: '9.71px',
-                      height: '5.71px',
-                      left: '3.14px',
-                      top: '5.14px',
+                      width: '1.3%',
+                      height: '0.6%',
+                      left: '0.4%',
+                      top: '0.5%',
                       position: 'absolute',
                       background: '#94A3B8'
                     }}></div>
@@ -495,7 +498,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                     right: '0',
                     background: 'white',
                     border: '1px solid #CBD5E1',
-                    borderRadius: '6px',
+                    borderRadius: '0.8%',
                     boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
                     zIndex: 1000
                   }}>
@@ -507,9 +510,9 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                           setFilterDropdownOpen(false);
                         }}
                         style={{
-                          padding: '8px 12px',
+                          padding: '1.1% 1.6%',
                           cursor: 'pointer',
-                          fontSize: '16px',
+                          fontSize: '2.1vw',
                           fontFamily: 'Inter',
                           fontWeight: '600',
                           color: '#64748B',
@@ -530,11 +533,11 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
             <div data-disabled="False" data-icon-only="True" data-link="False" data-severity="Secondary" data-show-left-icon="false" data-show-right-icon="false" data-state="Idle" data-rounded="False" data-raised="False" data-text="False" data-outlined="True" 
               onClick={onHide}
               style={{
-                width: '34px',
-                height: '32px',
-                paddingTop: '10.50px',
-                paddingBottom: '10.50px',
-                borderRadius: '6px',
+                width: '4.5%',
+                height: '3.1%',
+                paddingTop: '1.0%',
+                paddingBottom: '1.0%',
+                borderRadius: '0.8%',
                 outline: '1px #64748B solid',
                 outlineOffset: '-1px',
                 justifyContent: 'center',
@@ -544,16 +547,16 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
               }}
             >
               <div data-size="14x14" style={{
-                width: '14px',
-                height: '14px',
+                width: '1.9%',
+                height: '1.4%',
                 position: 'relative',
                 overflow: 'hidden'
               }}>
                 <div style={{
-                  width: '11px',
-                  height: '11px',
-                  left: '1.50px',
-                  top: '1.50px',
+                  width: '1.5%',
+                  height: '1.1%',
+                  left: '0.2%',
+                  top: '0.1%',
                   position: 'absolute',
                   background: '#64748B'
                 }}></div>
@@ -565,22 +568,22 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
         {/* Content Area */}
         <div style={{
           alignSelf: 'stretch',
-          height: '896px',
-          padding: '24px',
+          flex: '1',
+          padding: '3.2%',
           position: 'relative',
           background: '#F8FAFC',
-          overflow: 'hidden',
+          overflow: 'auto',
           flexDirection: 'column',
           justifyContent: 'flex-end',
           alignItems: 'flex-start',
-          gap: '24px',
+          gap: '3.2%',
           display: 'flex'
         }}>
           {/* Timeline Line */}
           <div style={{
-            width: '896px',
+            width: '100%',
             height: '0px',
-            left: '29px',
+            left: '3.8%',
             top: '0px',
             position: 'absolute',
             transform: 'rotate(90deg)',
@@ -601,24 +604,24 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
               data-show-note-menu="false"
               data-show-note-subject="false"
               style={{
-                width: '738px',
+                width: '97.6%',
                 justifyContent: 'flex-start',
                 alignItems: 'flex-start',
-                gap: note.level === 2 ? '48px' : '16px',
+                gap: note.level === 2 ? '6.3%' : '2.1%',
                 display: 'inline-flex'
               }}
             >
               {/* Timeline Dot */}
               <div style={{
-                paddingTop: '3px',
+                paddingTop: '0.4%',
                 justifyContent: 'flex-start',
                 alignItems: 'center',
-                gap: '10px',
+                gap: '1.3%',
                 display: 'flex'
               }}>
                 <div style={{
-                  width: '11px',
-                  height: '11px',
+                  width: '1.5%',
+                  height: '1.1%',
                   background: 'white',
                   borderRadius: '9999px',
                   border: '1px #609AF8 solid'
@@ -631,16 +634,16 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
                 alignItems: 'flex-start',
-                gap: '8px',
+                gap: '1.1%',
                 display: 'inline-flex'
               }}>
                 {/* Timestamp */}
                 <div style={{
                   color: '#6B7280',
-                  fontSize: '10.50px',
+                  fontSize: '1.4vw',
                   fontFamily: 'Inter',
                   fontWeight: '600',
-                  lineHeight: '15.75px',
+                  lineHeight: '1.5%',
                   wordWrap: 'break-word'
                 }}>
                   {formatRelativeTime(note.timestamp)}
@@ -648,19 +651,19 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
 
                 {/* Note Card */}
                 <div style={{
-                  paddingTop: '12px',
-                  paddingBottom: '16px',
-                  paddingLeft: '16px',
-                  paddingRight: '20px',
+                  paddingTop: '1.6%',
+                  paddingBottom: '2.1%',
+                  paddingLeft: '2.1%',
+                  paddingRight: '2.6%',
                   background: 'white',
                   overflow: 'hidden',
-                  borderRadius: '12px',
+                  borderRadius: '1.6%',
                   outline: '1px #DFE7EF solid',
                   outlineOffset: '-1px',
                   flexDirection: 'column',
                   justifyContent: 'center',
                   alignItems: 'flex-start',
-                  gap: '8px',
+                  gap: '1.1%',
                   display: 'flex'
                 }}>
                   {/* Author Header */}
@@ -673,12 +676,12 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                     <div style={{
                       justifyContent: 'flex-start',
                       alignItems: 'center',
-                      gap: '8px',
+                      gap: '1.1%',
                       display: 'flex'
                     }}>
                       <div data-variant={note.id === '6' ? '20' : note.id === '2' || note.id === '5' ? '2' : '3'} style={{
-                        width: '24px',
-                        height: '24px',
+                        width: '3.2%',
+                        height: '2.3%',
                         position: 'relative',
                         borderRadius: '999px',
                         ...(note.id === '6' && {
@@ -688,10 +691,10 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                       }}>
                         {note.id === '6' ? (
                           <img style={{
-                            width: '49.80px',
-                            height: '49.80px',
-                            left: '-16.80px',
-                            top: '-0.60px',
+                            width: '6.6%',
+                            height: '4.9%',
+                            left: '-2.2%',
+                            top: '-0.1%',
                             position: 'absolute',
                             borderRadius: '980px'
                           }}
@@ -700,8 +703,8 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                           />
                         ) : (
                           <img style={{
-                            width: '24px',
-                            height: '24px',
+                            width: '3.2%',
+                            height: '2.3%',
                             left: '0px',
                             top: '0px',
                             position: 'absolute',
@@ -715,12 +718,12 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                       <div style={{
                         justifyContent: 'flex-start',
                         alignItems: 'flex-start',
-                        gap: '4px',
+                        gap: '0.5%',
                         display: 'flex'
                       }}>
                         <div style={{
                           color: '#111827',
-                          fontSize: '14px',
+                          fontSize: '1.9vw',
                           fontFamily: 'Inter',
                           fontWeight: '600',
                           wordWrap: 'break-word'
@@ -730,8 +733,8 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                       </div>
                     </div>
                     <div data-size="14x14" style={{
-                      width: '14px',
-                      height: '14px',
+                      width: '1.9%',
+                      height: '1.4%',
                       position: 'relative',
                       overflow: 'hidden'
                     }}></div>
@@ -740,20 +743,23 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                   {/* Note Content */}
                   {note.id === '4' ? (
                     <div style={{
-                      width: '612px',
+                      width: '100%',
                       justifyContent: 'flex-start',
                       alignItems: 'center',
-                      gap: '4px',
+                      gap: '0.5%',
                       display: 'inline-flex'
                     }}>
                       <div style={{
                         flex: '1 1 0',
                         color: '#212121',
-                        fontSize: '14px',
+                        fontSize: '1.9vw',
                         fontFamily: 'Inter',
                         fontWeight: '400',
-                        lineHeight: '22px',
-                        wordWrap: 'break-word'
+                        lineHeight: '2.2%',
+                        wordWrap: 'break-word',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis'
                       }}>
                         {note.content}
                       </div>
@@ -762,15 +768,15 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                     <div style={{
                       justifyContent: 'flex-start',
                       alignItems: 'center',
-                      gap: '4px',
+                      gap: '0.5%',
                       display: 'inline-flex'
                     }}>
                       <div style={{
                         color: '#212121',
-                        fontSize: '14px',
+                        fontSize: '1.9vw',
                         fontFamily: 'Inter',
                         fontWeight: '400',
-                        lineHeight: '22px',
+                        lineHeight: '2.2%',
                         wordWrap: 'break-word'
                       }}>
                         {note.content}
@@ -782,32 +788,32 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                   <div style={{
                     justifyContent: 'flex-start',
                     alignItems: 'flex-start',
-                    gap: '8px',
+                    gap: '1.1%',
                     display: 'inline-flex'
                   }}>
                     {note.isPrivate && (
                       <div data-rounded="False" data-severity="Default" data-show-icon="true" style={{
-                        paddingLeft: '5.60px',
-                        paddingRight: '5.60px',
-                        paddingTop: '3.50px',
-                        paddingBottom: '3.50px',
+                        paddingLeft: '0.7%',
+                        paddingRight: '0.7%',
+                        paddingTop: '0.5%',
+                        paddingBottom: '0.5%',
                         background: '#F5F5F5',
-                        borderRadius: '6px',
+                        borderRadius: '0.8%',
                         justifyContent: 'flex-start',
                         alignItems: 'center',
-                        gap: '3.50px',
+                        gap: '0.5%',
                         display: 'flex'
                       }}>
                         <div data-size="14x14" style={{
-                          width: '10.50px',
-                          height: '10.50px',
+                          width: '1.4%',
+                          height: '1.0%',
                           position: 'relative',
                           overflow: 'hidden'
                         }}>
                           <div style={{
-                            width: '9.30px',
-                            height: '10.50px',
-                            left: '0.60px',
+                            width: '1.2%',
+                            height: '1.0%',
+                            left: '0.1%',
                             top: '0px',
                             position: 'absolute',
                             background: '#1F2937'
@@ -815,10 +821,10 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                         </div>
                         <div style={{
                           color: '#424242',
-                          fontSize: '10.50px',
+                          fontSize: '1.4vw',
                           fontFamily: 'Inter',
                           fontWeight: '600',
-                          lineHeight: '15.75px',
+                          lineHeight: '1.5%',
                           wordWrap: 'break-word'
                         }}>Private</div>
                       </div>
@@ -830,32 +836,32 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                         data-severity="Default"
                         data-show-icon={category === 'Team' ? 'true' : 'false'}
                         style={{
-                          paddingLeft: '5.60px',
-                          paddingRight: '5.60px',
-                          paddingTop: '3.50px',
-                          paddingBottom: '3.50px',
+                          paddingLeft: '0.7%',
+                          paddingRight: '0.7%',
+                          paddingTop: '0.5%',
+                          paddingBottom: '0.5%',
                           background: '#F5F5F5',
-                          borderRadius: '6px',
+                          borderRadius: '0.8%',
                           justifyContent: 'flex-start',
                           alignItems: 'center',
-                          gap: '3.50px',
+                          gap: '0.5%',
                           display: 'flex'
                         }}
                       >
                         {category === 'Team' && (
                           <div data-size="14x14" style={{
-                            width: '10.50px',
-                            height: '10.50px',
+                            width: '1.4%',
+                            height: '1.0%',
                             position: 'relative',
                             overflow: 'hidden'
                           }}></div>
                         )}
                         <div style={{
                           color: '#424242',
-                          fontSize: '10.50px',
+                          fontSize: '1.4vw',
                           fontFamily: 'Inter',
                           fontWeight: '600',
-                          lineHeight: '15.75px',
+                          lineHeight: '1.5%',
                           wordWrap: 'break-word'
                         }}>{category}</div>
                       </div>
@@ -868,10 +874,10 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
 
           {/* Scrollbar */}
           <div style={{
-            width: '4px',
-            height: '64px',
-            left: '739px',
-            top: '808px',
+            width: '0.5%',
+            height: '6.3%',
+            right: '0.7%',
+            bottom: '10%',
             position: 'absolute',
             background: '#CBD5E1',
             borderRadius: '99px'
@@ -881,48 +887,48 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
         {/* Footer - Add Note */}
         <div data-state="Empty" style={{
           alignSelf: 'stretch',
-          height: '72px',
-          paddingLeft: '24px',
-          paddingRight: '24px',
-          paddingTop: '16px',
-          paddingBottom: '16px',
+          height: '7.0%',
+          paddingLeft: '3.2%',
+          paddingRight: '3.2%',
+          paddingTop: '1.6%',
+          paddingBottom: '1.6%',
           background: 'white',
           borderTop: '1px #DFE1E6 solid',
           justifyContent: 'flex-end',
           alignItems: 'center',
-          gap: '16px',
+          gap: '2.1%',
           display: 'inline-flex'
         }}>
           {/* Note Input */}
           <div data-disabled="False" data-filled="False" data-float-label="True" data-invalid="False" data-show-float-label="false" data-show-helper="false" data-show-left-icon="true" data-show-right-icon="true" data-show-text="true" data-state="Default" style={{
             flex: '1 1 0',
-            height: '40px',
+            height: '3.9%',
             flexDirection: 'column',
             justifyContent: 'flex-start',
             alignItems: 'flex-start',
-            gap: '8px',
+            gap: '1.1%',
             display: 'inline-flex'
           }}>
             <div style={{
               alignSelf: 'stretch',
               flex: '1 1 0',
-              paddingLeft: '10.50px',
-              paddingRight: '10.50px',
-              paddingTop: '11.50px',
-              paddingBottom: '11.50px',
+              paddingLeft: '1.4%',
+              paddingRight: '1.4%',
+              paddingTop: '1.1%',
+              paddingBottom: '1.1%',
               background: 'white',
               overflow: 'hidden',
-              borderRadius: '6px',
+              borderRadius: '0.8%',
               outline: '1px #D1D5DB solid',
               outlineOffset: '-1px',
               justifyContent: 'flex-start',
               alignItems: 'center',
-              gap: '10.50px',
+              gap: '1.4%',
               display: 'inline-flex'
             }}>
               <div data-size="14x14" style={{
-                width: '14px',
-                height: '14px',
+                width: '1.9%',
+                height: '1.4%',
                 position: 'relative',
                 overflow: 'hidden'
               }}></div>
@@ -951,25 +957,25 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                       outline: 'none',
                       background: 'transparent',
                       color: '#6B7280',
-                      fontSize: '16px',
+                      fontSize: '2.1vw',
                       fontFamily: 'Inter',
                       fontWeight: '600',
-                      lineHeight: '22px',
+                      lineHeight: '2.2%',
                       wordWrap: 'break-word'
                     }}
                   />
                 </div>
               </div>
               <div data-size="14x14" style={{
-                width: '14px',
-                height: '14px',
+                width: '1.9%',
+                height: '1.4%',
                 position: 'relative',
                 overflow: 'hidden'
               }}>
                 <div style={{
-                  width: '12.40px',
-                  height: '14px',
-                  left: '0.80px',
+                  width: '1.6%',
+                  height: '1.4%',
+                  left: '0.1%',
                   top: '0px',
                   position: 'absolute',
                   background: '#6B7280'
@@ -978,15 +984,14 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
             </div>
           </div>
 
-          {/* Category Dropdown */}
+          {/* Category Input */}
           <div data-disabled="False" data-filled="False" data-float-label="True" data-invalid="False" data-show-float-label="false" data-show-helper="false" data-show-left-icon="false" data-show-right-icon="true" data-show-text="true" data-state="Default" style={{
-            position: 'relative',
-            width: '136px',
-            height: '40px',
+            width: '18.0%',
+            height: '3.9%',
             flexDirection: 'column',
             justifyContent: 'flex-start',
             alignItems: 'flex-start',
-            gap: '8px',
+            gap: '1.1%',
             display: 'inline-flex'
           }}>
             <div 
@@ -994,20 +999,21 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
               style={{
                 alignSelf: 'stretch',
                 flex: '1 1 0',
-                paddingLeft: '10.50px',
-                paddingRight: '10.50px',
-                paddingTop: '11.50px',
-                paddingBottom: '11.50px',
+                paddingLeft: '1.4%',
+                paddingRight: '1.4%',
+                paddingTop: '1.1%',
+                paddingBottom: '1.1%',
                 background: 'white',
                 overflow: 'hidden',
-                borderRadius: '6px',
+                borderRadius: '0.8%',
                 outline: '1px #D1D5DB solid',
                 outlineOffset: '-1px',
                 justifyContent: 'flex-start',
                 alignItems: 'center',
-                gap: '10.50px',
+                gap: '1.4%',
                 display: 'inline-flex',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                position: 'relative'
               }}
             >
               <div style={{
@@ -1027,97 +1033,107 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                   <div style={{
                     flex: '1 1 0',
                     color: '#6B7280',
-                    fontSize: '16px',
+                    fontSize: '2.1vw',
                     fontFamily: 'Inter',
                     fontWeight: '600',
-                    lineHeight: '22px',
+                    lineHeight: '2.2%',
                     wordWrap: 'break-word'
-                  }}>
-                    {noteCategory || 'Category'}
-                  </div>
+                  }}>{noteCategory || 'Category'}</div>
                 </div>
               </div>
               <div data-size="14x14" style={{
-                width: '14px',
-                height: '14px',
+                width: '1.9%',
+                height: '1.4%',
                 position: 'relative',
                 overflow: 'hidden'
               }}>
                 <div style={{
-                  width: '8.39px',
-                  height: '5px',
-                  left: '2.81px',
-                  top: '4.50px',
+                  width: '1.1%',
+                  height: '0.5%',
+                  left: '0.4%',
+                  top: '0.4%',
                   position: 'absolute',
                   background: '#6B7280'
                 }}></div>
               </div>
+
+              {categoryDropdownOpen && (
+                <div style={{
+                  position: 'absolute',
+                  bottom: '100%',
+                  left: '0',
+                  right: '0',
+                  background: 'white',
+                  border: '1px solid #D1D5DB',
+                  borderRadius: '0.8%',
+                  boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+                  zIndex: 1000
+                }}>
+                  {['Team', 'Qualification', 'Private'].map((category) => (
+                    <div
+                      key={category}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setNoteCategory(category);
+                        setCategoryDropdownOpen(false);
+                      }}
+                      style={{
+                        padding: '1.1% 1.4%',
+                        cursor: 'pointer',
+                        fontSize: '2.1vw',
+                        fontFamily: 'Inter',
+                        fontWeight: '600',
+                        color: '#6B7280',
+                        borderBottom: category === 'Private' ? 'none' : '1px solid #E2E8F0'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.background = '#F8FAFC'}
+                      onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
+                    >
+                      {category}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-            
-            {categoryDropdownOpen && (
-              <div style={{
-                position: 'absolute',
-                top: '-120px',
-                left: '0',
-                right: '0',
-                background: 'white',
-                border: '1px solid #D1D5DB',
-                borderRadius: '6px',
-                boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
-                zIndex: 1000
-              }}>
-                {['Team', 'Qualification', 'Private'].map((category) => (
-                  <div
-                    key={category}
-                    onClick={() => {
-                      setNoteCategory(category);
-                      setCategoryDropdownOpen(false);
-                    }}
-                    style={{
-                      padding: '8px 12px',
-                      cursor: 'pointer',
-                      fontSize: '16px',
-                      fontFamily: 'Inter',
-                      fontWeight: '600',
-                      color: '#6B7280',
-                      borderBottom: category === 'Private' ? 'none' : '1px solid #E2E8F0'
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.background = '#F8FAFC'}
-                    onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
-                  >
-                    {category}
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
 
           {/* Save Button */}
-          <div data-disabled="True" data-icon-only="False" data-link="False" data-severity="Secondary" data-show-left-icon="false" data-show-right-icon="false" data-state="Idle" data-rounded="False" data-raised="False" data-text="False" data-outlined="False" 
+          <div 
+            data-disabled={!newNote.trim() ? "True" : "False"}
+            data-icon-only="False"
+            data-link="False"
+            data-severity="Secondary"
+            data-show-left-icon="false"
+            data-show-right-icon="false"
+            data-state="Idle"
+            data-rounded="False"
+            data-raised="False"
+            data-text="False"
+            data-outlined="False"
             onClick={handleSaveNote}
             style={{
-              paddingLeft: '17.50px',
-              paddingRight: '17.50px',
-              paddingTop: '10.50px',
-              paddingBottom: '10.50px',
-              opacity: 0.70,
+              paddingLeft: '2.3%',
+              paddingRight: '2.3%',
+              paddingTop: '1.0%',
+              paddingBottom: '1.0%',
+              opacity: !newNote.trim() ? '0.70' : '1',
               background: '#64748B',
-              borderRadius: '6px',
+              borderRadius: '0.8%',
               outline: '1px #64748B solid',
               outlineOffset: '-1px',
               justifyContent: 'center',
               alignItems: 'center',
-              gap: '7px',
+              gap: '0.9%',
               display: 'flex',
-              cursor: newNote.trim() ? 'pointer' : 'not-allowed'
+              cursor: !newNote.trim() ? 'not-allowed' : 'pointer'
             }}
           >
             <div style={{
               color: 'white',
-              fontSize: '16px',
+              fontSize: '2.1vw',
               fontFamily: 'Inter',
               fontWeight: '600',
-              lineHeight: '22px',
+              lineHeight: '2.2%',
               wordWrap: 'break-word'
             }}>Save</div>
           </div>
