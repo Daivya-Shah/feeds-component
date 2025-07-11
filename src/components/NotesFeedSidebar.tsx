@@ -221,8 +221,8 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
       className="notes-feed-sidebar-exact"
     >
       <div style={{
-        width: '100%',
-        height: '100%',
+        width: '756px',
+        height: '1024px',
         boxShadow: '0px 8px 10px -6px rgba(0, 0, 0, 0.10)',
         overflow: 'hidden',
         outline: '1px #E2E8F0 solid',
@@ -230,7 +230,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        display: 'flex'
+        display: 'inline-flex'
       }}>
         {/* Header */}
         <div style={{
@@ -331,7 +331,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
             }}>
               {/* Search Input */}
               <div data-show-helper="false" data-state="Default" data-invalid="False" data-show-right-icon="false" data-show-left-icon="true" data-float-label="False" data-show-label="false" data-show-text="true" data-disabled="False" data-filled="False" data-size="Normal" style={{
-                width: 'min(216px, 30%)',
+                width: '216px',
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
                 alignItems: 'flex-start',
@@ -416,7 +416,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
               {/* Category Filter */}
               <div data-show-helper="false" data-state="Default" data-invalid="False" data-show-right-icon="true" data-show-left-icon="false" data-float-label="False" data-show-label="false" data-show-text="true" data-disabled="False" data-filled="False" data-size="Normal" style={{
                 position: 'relative',
-                width: 'min(169px, 25%)',
+                width: '169px',
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
                 alignItems: 'flex-start',
@@ -565,11 +565,11 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
         {/* Content Area */}
         <div style={{
           alignSelf: 'stretch',
-          flex: '1',
+          height: '896px',
           padding: '24px',
           position: 'relative',
           background: '#F8FAFC',
-          overflow: 'auto',
+          overflow: 'hidden',
           flexDirection: 'column',
           justifyContent: 'flex-end',
           alignItems: 'flex-start',
@@ -578,7 +578,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
         }}>
           {/* Timeline Line */}
           <div style={{
-            width: 'calc(100% - 48px)',
+            width: '896px',
             height: '0px',
             left: '29px',
             top: '0px',
@@ -601,8 +601,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
               data-show-note-menu="false"
               data-show-note-subject="false"
               style={{
-                width: '100%',
-                maxWidth: '738px',
+                width: '738px',
                 justifyContent: 'flex-start',
                 alignItems: 'flex-start',
                 gap: note.level === 2 ? '48px' : '16px',
@@ -741,7 +740,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                   {/* Note Content */}
                   {note.id === '4' ? (
                     <div style={{
-                      width: 'min(612px, 100%)',
+                      width: '612px',
                       justifyContent: 'flex-start',
                       alignItems: 'center',
                       gap: '4px',
@@ -871,8 +870,8 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
           <div style={{
             width: '4px',
             height: '64px',
-            right: '0px',
-            top: '60%',
+            left: '739px',
+            top: '808px',
             position: 'absolute',
             background: '#CBD5E1',
             borderRadius: '99px'
@@ -982,7 +981,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
           {/* Category Dropdown */}
           <div data-disabled="False" data-filled="False" data-float-label="True" data-invalid="False" data-show-float-label="false" data-show-helper="false" data-show-left-icon="false" data-show-right-icon="true" data-show-text="true" data-state="Default" style={{
             position: 'relative',
-            width: 'min(136px, 20%)',
+            width: '136px',
             height: '40px',
             flexDirection: 'column',
             justifyContent: 'flex-start',
