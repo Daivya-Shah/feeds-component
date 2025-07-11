@@ -214,15 +214,15 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
       position="right" 
       onHide={onHide}
       style={{ 
-        width: '50vw',
-        height: '100vh',
+        width: '756px',
+        height: '1024px',
         overflow: 'hidden'
       }}
       className="notes-feed-sidebar-exact"
     >
       <div style={{
-        width: '100%',
-        height: '100%',
+        width: '756px',
+        height: '1024px',
         boxShadow: '0px 8px 10px -6px rgba(0, 0, 0, 0.10)',
         overflow: 'hidden',
         outline: '1px #E2E8F0 solid',
