@@ -214,8 +214,8 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
       position="right" 
       onHide={onHide}
       style={{ 
-        width: '756px',
-        height: '1024px',
+        width: '50vw',
+        height: '100vh',
         overflow: 'hidden'
       }}
       className="notes-feed-sidebar-exact"
