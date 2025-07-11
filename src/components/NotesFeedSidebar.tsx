@@ -252,7 +252,21 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
             gap: '8px',
             display: 'flex'
           }}>
-            <StickyNoteIcon />
+            <div data-size="24x24" style={{
+              width: '24px',
+              height: '24px',
+              position: 'relative',
+              overflow: 'hidden'
+            }}>
+              <div style={{
+                width: '13.50px',
+                height: '17.50px',
+                left: '5.25px',
+                top: '3.25px',
+                position: 'absolute',
+                background: '#4B5563'
+              }}></div>
+            </div>
             <div style={{
               color: '#0F172A',
               fontSize: '16px',
@@ -269,7 +283,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
               lineHeight: '22px',
               wordWrap: 'break-word'
             }}>Notes</div>
-            <div style={{
+            <div data-circle="False" data-severity="Secondary" data-size="Small" style={{
               height: '17.50px',
               minWidth: '17.50px',
               paddingLeft: '7px',
@@ -288,9 +302,19 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                 fontWeight: '600',
                 lineHeight: '22px',
                 wordWrap: 'break-word'
-              }}>{notes.length}</div>
+              }}>8</div>
             </div>
           </div>
+
+          {/* Empty space */}
+          <div style={{
+            color: '#026BB6',
+            fontSize: '16px',
+            fontFamily: 'Inter',
+            fontWeight: '600',
+            lineHeight: '22px',
+            wordWrap: 'break-word'
+          }}> </div>
 
           {/* Right side - Controls */}
           <div style={{
@@ -299,65 +323,22 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
             gap: '16px',
             display: 'flex'
           }}>
-            {/* Search Input */}
             <div style={{
-              width: '216px',
-              flexDirection: 'column',
-              justifyContent: 'flex-start',
-              alignItems: 'flex-start',
-              gap: '4px',
-              display: 'inline-flex'
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+              gap: '16px',
+              display: 'flex'
             }}>
-              <div style={{
-                alignSelf: 'stretch',
-                paddingLeft: '12px',
-                paddingRight: '12px',
-                paddingTop: '8px',
-                paddingBottom: '8px',
-                background: 'white',
-                boxShadow: '0px 1px 2px rgba(18, 18, 23, 0.05)',
-                borderRadius: '6px',
-                outline: '1px #CBD5E1 solid',
-                outlineOffset: '-1px',
+              {/* Search Input */}
+              <div data-show-helper="false" data-state="Default" data-invalid="False" data-show-right-icon="false" data-show-left-icon="true" data-float-label="False" data-show-label="false" data-show-text="true" data-disabled="False" data-filled="False" data-size="Normal" style={{
+                width: '216px',
+                flexDirection: 'column',
                 justifyContent: 'flex-start',
-                alignItems: 'center',
-                gap: '8px',
+                alignItems: 'flex-start',
+                gap: '4px',
                 display: 'inline-flex'
               }}>
-                <SearchIcon />
-                <input
-                  type="text"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Search notes"
-                  style={{
-                    flex: '1 1 0',
-                    border: 'none',
-                    outline: 'none',
-                    background: 'transparent',
-                    color: '#64748B',
-                    fontSize: '16px',
-                    fontFamily: 'Inter',
-                    fontWeight: '600',
-                    lineHeight: '22px'
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* Category Filter */}
-            <div style={{
-              position: 'relative',
-              width: '169px',
-              flexDirection: 'column',
-              justifyContent: 'flex-start',
-              alignItems: 'flex-start',
-              gap: '4px',
-              display: 'inline-flex'
-            }}>
-              <div 
-                onClick={() => setFilterDropdownOpen(!filterDropdownOpen)}
-                style={{
+                <div style={{
                   alignSelf: 'stretch',
                   paddingLeft: '12px',
                   paddingRight: '12px',
@@ -371,63 +352,182 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                   justifyContent: 'flex-start',
                   alignItems: 'center',
                   gap: '8px',
-                  display: 'inline-flex',
-                  cursor: 'pointer'
-                }}
-              >
-                <div style={{
-                  flex: '1 1 0',
-                  color: selectedCategory || '#64748B',
-                  fontSize: '16px',
-                  fontFamily: 'Inter',
-                  fontWeight: '600',
-                  lineHeight: '22px'
+                  display: 'inline-flex'
                 }}>
-                  {selectedCategory || 'Filter by Category'}
+                  <div style={{
+                    width: '16px',
+                    height: '16px',
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}>
+                    <div style={{
+                      width: '13.33px',
+                      height: '13.33px',
+                      left: '1.33px',
+                      top: '1.33px',
+                      position: 'absolute',
+                      background: '#94A3B8'
+                    }}></div>
+                  </div>
+                  <div style={{
+                    flex: '1 1 0',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'flex-start',
+                    display: 'inline-flex'
+                  }}>
+                    <div data-text-config="Placeholder" style={{
+                      alignSelf: 'stretch',
+                      overflow: 'hidden',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      display: 'inline-flex'
+                    }}>
+                      <input
+                        type="text"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        placeholder="Search notes"
+                        style={{
+                          flex: '1 1 0',
+                          border: 'none',
+                          outline: 'none',
+                          background: 'transparent',
+                          color: '#64748B',
+                          fontSize: '16px',
+                          fontFamily: 'Inter',
+                          fontWeight: '600',
+                          lineHeight: '22px',
+                          wordWrap: 'break-word'
+                        }}
+                      />
+                    </div>
+                  </div>
                 </div>
-                <ChevronDownIcon />
               </div>
-              
-              {filterDropdownOpen && (
-                <div style={{
-                  position: 'absolute',
-                  top: '100%',
-                  left: '0',
-                  right: '0',
-                  background: 'white',
-                  border: '1px solid #CBD5E1',
-                  borderRadius: '6px',
-                  boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
-                  zIndex: 1000
-                }}>
-                  {['All Categories', 'Team', 'Qualification', 'Private'].map((category) => (
-                    <div
-                      key={category}
-                      onClick={() => {
-                        setSelectedCategory(category === 'All Categories' ? '' : category);
-                        setFilterDropdownOpen(false);
-                      }}
-                      style={{
-                        padding: '8px 12px',
-                        cursor: 'pointer',
+            </div>
+
+            <div style={{
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+              gap: '16px',
+              display: 'flex'
+            }}>
+              {/* Category Filter */}
+              <div data-show-helper="false" data-state="Default" data-invalid="False" data-show-right-icon="true" data-show-left-icon="false" data-float-label="False" data-show-label="false" data-show-text="true" data-disabled="False" data-filled="False" data-size="Normal" style={{
+                position: 'relative',
+                width: '169px',
+                flexDirection: 'column',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
+                gap: '4px',
+                display: 'inline-flex'
+              }}>
+                <div 
+                  onClick={() => setFilterDropdownOpen(!filterDropdownOpen)}
+                  style={{
+                    alignSelf: 'stretch',
+                    paddingLeft: '12px',
+                    paddingRight: '12px',
+                    paddingTop: '8px',
+                    paddingBottom: '8px',
+                    background: 'white',
+                    boxShadow: '0px 1px 2px rgba(18, 18, 23, 0.05)',
+                    borderRadius: '6px',
+                    outline: '1px #CBD5E1 solid',
+                    outlineOffset: '-1px',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    gap: '8px',
+                    display: 'inline-flex',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <div style={{
+                    flex: '1 1 0',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'flex-start',
+                    display: 'inline-flex'
+                  }}>
+                    <div data-text-config="Placeholder" style={{
+                      alignSelf: 'stretch',
+                      overflow: 'hidden',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      display: 'inline-flex'
+                    }}>
+                      <div style={{
+                        flex: '1 1 0',
+                        color: '#64748B',
                         fontSize: '16px',
                         fontFamily: 'Inter',
                         fontWeight: '600',
-                        color: '#64748B',
-                        borderBottom: category === 'Private' ? 'none' : '1px solid #E2E8F0'
-                      }}
-                      onMouseEnter={(e) => e.currentTarget.style.background = '#F8FAFC'}
-                      onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
-                    >
-                      {category}
+                        lineHeight: '22px',
+                        wordWrap: 'break-word'
+                      }}>
+                        {selectedCategory || 'Filter by Category'}
+                      </div>
                     </div>
-                  ))}
+                  </div>
+                  <div style={{
+                    width: '16px',
+                    height: '16px',
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}>
+                    <div style={{
+                      width: '9.71px',
+                      height: '5.71px',
+                      left: '3.14px',
+                      top: '5.14px',
+                      position: 'absolute',
+                      background: '#94A3B8'
+                    }}></div>
+                  </div>
                 </div>
-              )}
+                
+                {filterDropdownOpen && (
+                  <div style={{
+                    position: 'absolute',
+                    top: '100%',
+                    left: '0',
+                    right: '0',
+                    background: 'white',
+                    border: '1px solid #CBD5E1',
+                    borderRadius: '6px',
+                    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+                    zIndex: 1000
+                  }}>
+                    {['All Categories', 'Team', 'Qualification', 'Private'].map((category) => (
+                      <div
+                        key={category}
+                        onClick={() => {
+                          setSelectedCategory(category === 'All Categories' ? '' : category);
+                          setFilterDropdownOpen(false);
+                        }}
+                        style={{
+                          padding: '8px 12px',
+                          cursor: 'pointer',
+                          fontSize: '16px',
+                          fontFamily: 'Inter',
+                          fontWeight: '600',
+                          color: '#64748B',
+                          borderBottom: category === 'Private' ? 'none' : '1px solid #E2E8F0'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.background = '#F8FAFC'}
+                        onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
+                      >
+                        {category}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Close Button */}
-            <div 
+            <div data-disabled="False" data-icon-only="True" data-link="False" data-severity="Secondary" data-show-left-icon="false" data-show-right-icon="false" data-state="Idle" data-rounded="False" data-raised="False" data-text="False" data-outlined="True" 
               onClick={onHide}
               style={{
                 width: '34px',
@@ -443,7 +543,21 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                 cursor: 'pointer'
               }}
             >
-              <CloseIcon />
+              <div data-size="14x14" style={{
+                width: '14px',
+                height: '14px',
+                position: 'relative',
+                overflow: 'hidden'
+              }}>
+                <div style={{
+                  width: '11px',
+                  height: '11px',
+                  left: '1.50px',
+                  top: '1.50px',
+                  position: 'absolute',
+                  background: '#64748B'
+                }}></div>
+              </div>
             </div>
           </div>
         </div>
@@ -479,6 +593,13 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
           {filteredNotes.map((note, index) => (
             <div 
               key={note.id}
+              data-feed-type="Note"
+              data-level={note.level}
+              data-show-attachment="false"
+              data-show-image="false"
+              data-show-note-action="false"
+              data-show-note-menu="false"
+              data-show-note-subject="false"
               style={{
                 width: '738px',
                 justifyContent: 'flex-start',
@@ -555,14 +676,30 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                       gap: '8px',
                       display: 'flex'
                     }}>
-                      <div style={{
+                      <div data-variant={note.id === '6' ? '20' : note.id === '2' || note.id === '5' ? '2' : '3'} style={{
                         width: '24px',
                         height: '24px',
                         position: 'relative',
-                        borderRadius: '999px'
+                        borderRadius: '999px',
+                        ...(note.id === '6' && {
+                          overflow: 'hidden',
+                          backgroundImage: 'url(https://placehold.co/24x24)'
+                        })
                       }}>
-                        <img 
-                          style={{
+                        {note.id === '6' ? (
+                          <img style={{
+                            width: '49.80px',
+                            height: '49.80px',
+                            left: '-16.80px',
+                            top: '-0.60px',
+                            position: 'absolute',
+                            borderRadius: '980px'
+                          }}
+                          src="https://placehold.co/50x50"
+                          alt={note.author}
+                          />
+                        ) : (
+                          <img style={{
                             width: '24px',
                             height: '24px',
                             left: '0px',
@@ -572,7 +709,8 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                           }}
                           src={note.avatar}
                           alt={note.author}
-                        />
+                          />
+                        )}
                       </div>
                       <div style={{
                         justifyContent: 'flex-start',
@@ -591,26 +729,54 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                         </div>
                       </div>
                     </div>
+                    <div data-size="14x14" style={{
+                      width: '14px',
+                      height: '14px',
+                      position: 'relative',
+                      overflow: 'hidden'
+                    }}></div>
                   </div>
 
                   {/* Note Content */}
-                  <div style={{
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    gap: '4px',
-                    display: 'inline-flex'
-                  }}>
+                  {note.id === '4' ? (
                     <div style={{
-                      color: '#212121',
-                      fontSize: '14px',
-                      fontFamily: 'Inter',
-                      fontWeight: '400',
-                      lineHeight: '22px',
-                      wordWrap: 'break-word'
+                      width: '612px',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      gap: '4px',
+                      display: 'inline-flex'
                     }}>
-                      {note.content}
+                      <div style={{
+                        flex: '1 1 0',
+                        color: '#212121',
+                        fontSize: '14px',
+                        fontFamily: 'Inter',
+                        fontWeight: '400',
+                        lineHeight: '22px',
+                        wordWrap: 'break-word'
+                      }}>
+                        {note.content}
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <div style={{
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      gap: '4px',
+                      display: 'inline-flex'
+                    }}>
+                      <div style={{
+                        color: '#212121',
+                        fontSize: '14px',
+                        fontFamily: 'Inter',
+                        fontWeight: '400',
+                        lineHeight: '22px',
+                        wordWrap: 'break-word'
+                      }}>
+                        {note.content}
+                      </div>
+                    </div>
+                  )}
 
                   {/* Categories */}
                   <div style={{
@@ -620,7 +786,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                     display: 'inline-flex'
                   }}>
                     {note.isPrivate && (
-                      <div style={{
+                      <div data-rounded="False" data-severity="Default" data-show-icon="true" style={{
                         paddingLeft: '5.60px',
                         paddingRight: '5.60px',
                         paddingTop: '3.50px',
@@ -632,7 +798,21 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                         gap: '3.50px',
                         display: 'flex'
                       }}>
-                        <PrivateLockIcon />
+                        <div data-size="14x14" style={{
+                          width: '10.50px',
+                          height: '10.50px',
+                          position: 'relative',
+                          overflow: 'hidden'
+                        }}>
+                          <div style={{
+                            width: '9.30px',
+                            height: '10.50px',
+                            left: '0.60px',
+                            top: '0px',
+                            position: 'absolute',
+                            background: '#1F2937'
+                          }}></div>
+                        </div>
                         <div style={{
                           color: '#424242',
                           fontSize: '10.50px',
@@ -646,6 +826,9 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                     {note.categories.map((category, idx) => (
                       <div 
                         key={idx}
+                        data-rounded="False"
+                        data-severity="Default"
+                        data-show-icon={category === 'Team' ? 'true' : 'false'}
                         style={{
                           paddingLeft: '5.60px',
                           paddingRight: '5.60px',
@@ -659,7 +842,14 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                           display: 'flex'
                         }}
                       >
-                        {category === 'Team' && <TeamIcon />}
+                        {category === 'Team' && (
+                          <div data-size="14x14" style={{
+                            width: '10.50px',
+                            height: '10.50px',
+                            position: 'relative',
+                            overflow: 'hidden'
+                          }}></div>
+                        )}
                         <div style={{
                           color: '#424242',
                           fontSize: '10.50px',
@@ -689,7 +879,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
         </div>
 
         {/* Footer - Add Note */}
-        <div style={{
+        <div data-state="Empty" style={{
           alignSelf: 'stretch',
           height: '72px',
           paddingLeft: '24px',
@@ -704,7 +894,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
           display: 'inline-flex'
         }}>
           {/* Note Input */}
-          <div style={{
+          <div data-disabled="False" data-filled="False" data-float-label="True" data-invalid="False" data-show-float-label="false" data-show-helper="false" data-show-left-icon="true" data-show-right-icon="true" data-show-text="true" data-state="Default" style={{
             flex: '1 1 0',
             height: '40px',
             flexDirection: 'column',
@@ -730,30 +920,66 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
               gap: '10.50px',
               display: 'inline-flex'
             }}>
-              <NoteInputLeftIcon />
-              <input
-                type="text"
-                value={newNote}
-                onChange={(e) => setNewNote(e.target.value)}
-                placeholder="Enter note"
-                style={{
-                  flex: '1 1 0',
-                  border: 'none',
-                  outline: 'none',
-                  background: 'transparent',
-                  color: '#6B7280',
-                  fontSize: '16px',
-                  fontFamily: 'Inter',
-                  fontWeight: '600',
-                  lineHeight: '22px'
-                }}
-              />
-              <SendIcon />
+              <div data-size="14x14" style={{
+                width: '14px',
+                height: '14px',
+                position: 'relative',
+                overflow: 'hidden'
+              }}></div>
+              <div style={{
+                flex: '1 1 0',
+                flexDirection: 'column',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
+                display: 'inline-flex'
+              }}>
+                <div data-show-token-1="true" data-show-token-2="false" data-show-token-3="false" data-text-config="Placeholder" style={{
+                  alignSelf: 'stretch',
+                  overflow: 'hidden',
+                  justifyContent: 'flex-start',
+                  alignItems: 'flex-start',
+                  display: 'inline-flex'
+                }}>
+                  <input
+                    type="text"
+                    value={newNote}
+                    onChange={(e) => setNewNote(e.target.value)}
+                    placeholder="Enter note"
+                    style={{
+                      flex: '1 1 0',
+                      border: 'none',
+                      outline: 'none',
+                      background: 'transparent',
+                      color: '#6B7280',
+                      fontSize: '16px',
+                      fontFamily: 'Inter',
+                      fontWeight: '600',
+                      lineHeight: '22px',
+                      wordWrap: 'break-word'
+                    }}
+                  />
+                </div>
+              </div>
+              <div data-size="14x14" style={{
+                width: '14px',
+                height: '14px',
+                position: 'relative',
+                overflow: 'hidden'
+              }}>
+                <div style={{
+                  width: '12.40px',
+                  height: '14px',
+                  left: '0.80px',
+                  top: '0px',
+                  position: 'absolute',
+                  background: '#6B7280'
+                }}></div>
+              </div>
             </div>
           </div>
 
           {/* Category Dropdown */}
-          <div style={{
+          <div data-disabled="False" data-filled="False" data-float-label="True" data-invalid="False" data-show-float-label="false" data-show-helper="false" data-show-left-icon="false" data-show-right-icon="true" data-show-text="true" data-state="Default" style={{
             position: 'relative',
             width: '136px',
             height: '40px',
@@ -786,15 +1012,46 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
             >
               <div style={{
                 flex: '1 1 0',
-                color: noteCategory || '#6B7280',
-                fontSize: '16px',
-                fontFamily: 'Inter',
-                fontWeight: '600',
-                lineHeight: '22px'
+                flexDirection: 'column',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
+                display: 'inline-flex'
               }}>
-                {noteCategory || 'Category'}
+                <div data-show-token-1="true" data-show-token-2="false" data-show-token-3="false" data-text-config="Placeholder" style={{
+                  alignSelf: 'stretch',
+                  overflow: 'hidden',
+                  justifyContent: 'flex-start',
+                  alignItems: 'flex-start',
+                  display: 'inline-flex'
+                }}>
+                  <div style={{
+                    flex: '1 1 0',
+                    color: '#6B7280',
+                    fontSize: '16px',
+                    fontFamily: 'Inter',
+                    fontWeight: '600',
+                    lineHeight: '22px',
+                    wordWrap: 'break-word'
+                  }}>
+                    {noteCategory || 'Category'}
+                  </div>
+                </div>
               </div>
-              <CategoryDropdownIcon />
+              <div data-size="14x14" style={{
+                width: '14px',
+                height: '14px',
+                position: 'relative',
+                overflow: 'hidden'
+              }}>
+                <div style={{
+                  width: '8.39px',
+                  height: '5px',
+                  left: '2.81px',
+                  top: '4.50px',
+                  position: 'absolute',
+                  background: '#6B7280'
+                }}></div>
+              </div>
             </div>
             
             {categoryDropdownOpen && (
@@ -836,14 +1093,14 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
           </div>
 
           {/* Save Button */}
-          <div 
+          <div data-disabled="True" data-icon-only="False" data-link="False" data-severity="Secondary" data-show-left-icon="false" data-show-right-icon="false" data-state="Idle" data-rounded="False" data-raised="False" data-text="False" data-outlined="False" 
             onClick={handleSaveNote}
             style={{
               paddingLeft: '17.50px',
               paddingRight: '17.50px',
               paddingTop: '10.50px',
               paddingBottom: '10.50px',
-              opacity: newNote.trim() ? 1 : 0.70,
+              opacity: 0.70,
               background: '#64748B',
               borderRadius: '6px',
               outline: '1px #64748B solid',
