@@ -192,6 +192,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
   const [noteCategory, setNoteCategory] = useState('');
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
+  const [audienceDropdownOpen, setAudienceDropdownOpen] = useState(false);
 
   const filteredNotes = notes.filter(note => {
     const matchesSearch = note.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -489,36 +490,93 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                 
                 {filterDropdownOpen && (
                   <div style={{
+                    width: '136px',
+                    paddingTop: '7px',
+                    paddingBottom: '7px',
                     position: 'absolute',
                     top: '100%',
                     left: '0',
-                    right: '0',
                     background: 'white',
-                    border: '1px solid #CBD5E1',
                     borderRadius: '6px',
+                    outline: '1px #E5E7EB solid',
                     boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
-                    zIndex: 1000
+                    zIndex: 1000,
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                    display: 'inline-flex'
                   }}>
-                    {['All Categories', 'Team', 'Qualification', 'Private'].map((category) => (
+                    {/* Categories Header */}
+                    <div style={{
+                      alignSelf: 'stretch',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      gap: '7px',
+                      display: 'inline-flex'
+                    }}>
+                      <div style={{
+                        flex: '1 1 0',
+                        paddingLeft: '17.50px',
+                        paddingRight: '17.50px',
+                        paddingTop: '10.50px',
+                        paddingBottom: '10.50px',
+                        background: 'white',
+                        flexDirection: 'column',
+                        justifyContent: 'flex-start',
+                        alignItems: 'flex-start',
+                        gap: '7px',
+                        display: 'inline-flex'
+                      }}>
+                        <div style={{
+                          alignSelf: 'stretch',
+                          color: '#374151',
+                          fontSize: '14px',
+                          fontFamily: 'Inter',
+                          fontWeight: '700',
+                          wordWrap: 'break-word'
+                        }}>Categories</div>
+                      </div>
+                    </div>
+
+                    {/* Category Items */}
+                    {['None', 'Company', 'Contact', 'Location', 'Budget', 'Property'].map((category) => (
                       <div
                         key={category}
                         onClick={() => {
-                          setSelectedCategory(category === 'All Categories' ? '' : category);
+                          setSelectedCategory(category === 'None' ? '' : category);
                           setFilterDropdownOpen(false);
                         }}
                         style={{
-                          padding: '8px 12px',
-                          cursor: 'pointer',
-                          fontSize: '16px',
-                          fontFamily: 'Inter',
-                          fontWeight: '600',
-                          color: '#64748B',
-                          borderBottom: category === 'Private' ? 'none' : '1px solid #E2E8F0'
+                          alignSelf: 'stretch',
+                          background: selectedCategory === (category === 'None' ? '' : category) ? '#EFF6FF' : 'transparent',
+                          justifyContent: 'flex-start',
+                          alignItems: 'center',
+                          gap: '7px',
+                          display: 'inline-flex',
+                          cursor: 'pointer'
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.background = '#F8FAFC'}
-                        onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
                       >
-                        {category}
+                        <div style={{
+                          flex: '1 1 0',
+                          paddingLeft: '17.50px',
+                          paddingRight: '17.50px',
+                          paddingTop: '10.50px',
+                          paddingBottom: '10.50px',
+                          justifyContent: 'flex-start',
+                          alignItems: 'flex-start',
+                          gap: '7px',
+                          display: 'flex'
+                        }}>
+                          <div style={{
+                            flex: '1 1 0',
+                            color: selectedCategory === (category === 'None' ? '' : category) ? '#1D4ED8' : '#4B5563',
+                            fontSize: '14px',
+                            fontFamily: 'Inter',
+                            fontWeight: '400',
+                            lineHeight: '14px',
+                            wordWrap: 'break-word'
+                          }}>{category}</div>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -960,12 +1018,16 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                   />
                 </div>
               </div>
-              <div data-size="14x14" style={{
-                width: '14px',
-                height: '14px',
-                position: 'relative',
-                overflow: 'hidden'
-              }}>
+               <div 
+                onClick={() => setAudienceDropdownOpen(!audienceDropdownOpen)}
+                style={{
+                  width: '14px',
+                  height: '14px',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  cursor: 'pointer'
+                }}
+              >
                 <div style={{
                   width: '12.40px',
                   height: '14px',
@@ -975,6 +1037,189 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                   background: '#6B7280'
                 }}></div>
               </div>
+              
+              {/* Audience Dropdown */}
+              {audienceDropdownOpen && (
+                <div style={{
+                  width: '175px',
+                  paddingTop: '7px',
+                  paddingBottom: '7px',
+                  position: 'absolute',
+                  bottom: '100%',
+                  right: '0',
+                  background: 'white',
+                  borderRadius: '6px',
+                  outline: '1px #E5E7EB solid',
+                  boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+                  zIndex: 1000,
+                  flexDirection: 'column',
+                  justifyContent: 'flex-start',
+                  alignItems: 'flex-start',
+                  display: 'inline-flex'
+                }}>
+                  {/* Audience Header */}
+                  <div style={{
+                    alignSelf: 'stretch',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    gap: '7px',
+                    display: 'inline-flex'
+                  }}>
+                    <div style={{
+                      flex: '1 1 0',
+                      paddingLeft: '17.50px',
+                      paddingRight: '17.50px',
+                      paddingTop: '10.50px',
+                      paddingBottom: '10.50px',
+                      background: 'white',
+                      flexDirection: 'column',
+                      justifyContent: 'flex-start',
+                      alignItems: 'flex-start',
+                      gap: '7px',
+                      display: 'inline-flex'
+                    }}>
+                      <div style={{
+                        alignSelf: 'stretch',
+                        color: '#374151',
+                        fontSize: '14px',
+                        fontFamily: 'Inter',
+                        fontWeight: '700',
+                        wordWrap: 'break-word'
+                      }}>Audience</div>
+                    </div>
+                  </div>
+
+                  {/* Private Option */}
+                  <div style={{
+                    alignSelf: 'stretch',
+                    background: '#EFF6FF',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    gap: '7px',
+                    display: 'inline-flex'
+                  }}>
+                    <div style={{
+                      flex: '1 1 0',
+                      paddingLeft: '17.50px',
+                      paddingRight: '17.50px',
+                      paddingTop: '10.50px',
+                      paddingBottom: '10.50px',
+                      justifyContent: 'flex-start',
+                      alignItems: 'flex-start',
+                      gap: '7px',
+                      display: 'flex'
+                    }}>
+                      <div style={{
+                        width: '14px',
+                        height: '14px',
+                        position: 'relative',
+                        overflow: 'hidden'
+                      }}>
+                        <div style={{
+                          width: '12.40px',
+                          height: '14px',
+                          left: '0.80px',
+                          top: '0px',
+                          position: 'absolute',
+                          background: '#1D4ED8'
+                        }}></div>
+                      </div>
+                      <div style={{
+                        flex: '1 1 0',
+                        color: '#1D4ED8',
+                        fontSize: '14px',
+                        fontFamily: 'Inter',
+                        fontWeight: '400',
+                        lineHeight: '14px',
+                        wordWrap: 'break-word'
+                      }}>Private</div>
+                    </div>
+                  </div>
+
+                  {/* My team Option */}
+                  <div style={{
+                    alignSelf: 'stretch',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    gap: '7px',
+                    display: 'inline-flex'
+                  }}>
+                    <div style={{
+                      flex: '1 1 0',
+                      paddingLeft: '17.50px',
+                      paddingRight: '17.50px',
+                      paddingTop: '10.50px',
+                      paddingBottom: '10.50px',
+                      justifyContent: 'flex-start',
+                      alignItems: 'flex-start',
+                      gap: '7px',
+                      display: 'flex'
+                    }}>
+                      <div style={{
+                        width: '14px',
+                        height: '14px',
+                        position: 'relative',
+                        overflow: 'hidden'
+                      }}></div>
+                      <div style={{
+                        flex: '1 1 0',
+                        color: '#4B5563',
+                        fontSize: '14px',
+                        fontFamily: 'Inter',
+                        fontWeight: '400',
+                        lineHeight: '14px',
+                        wordWrap: 'break-word'
+                      }}>My team</div>
+                    </div>
+                  </div>
+
+                  {/* Someone specific Option */}
+                  <div style={{
+                    alignSelf: 'stretch',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    gap: '7px',
+                    display: 'inline-flex'
+                  }}>
+                    <div style={{
+                      flex: '1 1 0',
+                      paddingLeft: '17.50px',
+                      paddingRight: '17.50px',
+                      paddingTop: '10.50px',
+                      paddingBottom: '10.50px',
+                      justifyContent: 'flex-start',
+                      alignItems: 'flex-start',
+                      gap: '7px',
+                      display: 'flex'
+                    }}>
+                      <div style={{
+                        width: '14px',
+                        height: '14px',
+                        position: 'relative',
+                        overflow: 'hidden'
+                      }}>
+                        <div style={{
+                          width: '14px',
+                          height: '14px',
+                          left: '0px',
+                          top: '0px',
+                          position: 'absolute',
+                          background: '#6B7280'
+                        }}></div>
+                      </div>
+                      <div style={{
+                        flex: '1 1 0',
+                        color: '#4B5563',
+                        fontSize: '14px',
+                        fontFamily: 'Inter',
+                        fontWeight: '400',
+                        lineHeight: '14px',
+                        wordWrap: 'break-word'
+                      }}>Someone specific</div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
