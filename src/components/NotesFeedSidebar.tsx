@@ -1040,31 +1040,45 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
               
               {/* Audience Dropdown */}
               {audienceDropdownOpen && (
-                <div style={{
-                  width: '175px',
-                  paddingTop: '7px',
-                  paddingBottom: '7px',
-                  position: 'absolute',
-                  bottom: '100%',
-                  right: '0',
-                  background: 'white',
-                  borderRadius: '6px',
-                  outline: '1px #E5E7EB solid',
-                  boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
-                  zIndex: 1000,
-                  flexDirection: 'column',
-                  justifyContent: 'flex-start',
-                  alignItems: 'flex-start',
-                  display: 'inline-flex'
-                }}>
-                  {/* Audience Header */}
-                  <div style={{
-                    alignSelf: 'stretch',
+                <div 
+                  data-show-button="true" 
+                  data-show-menu="true" 
+                  data-show-separator="false" 
+                  data-type="Basic" 
+                  style={{
+                    width: '175px',
+                    paddingTop: '7px',
+                    paddingBottom: '7px',
+                    position: 'absolute',
+                    bottom: '100%',
+                    right: '0',
+                    background: 'white',
+                    borderRadius: '6px',
+                    outline: '1px #E5E7EB solid',
+                    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+                    zIndex: 1000,
+                    flexDirection: 'column',
                     justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    gap: '7px',
+                    alignItems: 'flex-start',
                     display: 'inline-flex'
-                  }}>
+                  }}
+                >
+                  {/* Audience Header */}
+                  <div 
+                    data-direction="Vertical" 
+                    data-show-icon="true" 
+                    data-show-left-angle="true" 
+                    data-show-right-angle="true" 
+                    data-state="Idle" 
+                    data-type="Header" 
+                    style={{
+                      alignSelf: 'stretch',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      gap: '7px',
+                      display: 'inline-flex'
+                    }}
+                  >
                     <div style={{
                       flex: '1 1 0',
                       paddingLeft: '17.50px',
@@ -1090,14 +1104,22 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                   </div>
 
                   {/* Private Option */}
-                  <div style={{
-                    alignSelf: 'stretch',
-                    background: '#EFF6FF',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    gap: '7px',
-                    display: 'inline-flex'
-                  }}>
+                  <div 
+                    data-direction="Vertical" 
+                    data-show-icon="true" 
+                    data-show-left-angle="false" 
+                    data-show-right-angle="false" 
+                    data-state="Highlight" 
+                    data-type="Link" 
+                    style={{
+                      alignSelf: 'stretch',
+                      background: '#EFF6FF',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      gap: '7px',
+                      display: 'inline-flex'
+                    }}
+                  >
                     <div style={{
                       flex: '1 1 0',
                       paddingLeft: '17.50px',
@@ -1109,7 +1131,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                       gap: '7px',
                       display: 'flex'
                     }}>
-                      <div style={{
+                      <div data-size="14x14" style={{
                         width: '14px',
                         height: '14px',
                         position: 'relative',
@@ -1137,13 +1159,21 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                   </div>
 
                   {/* My team Option */}
-                  <div style={{
-                    alignSelf: 'stretch',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    gap: '7px',
-                    display: 'inline-flex'
-                  }}>
+                  <div 
+                    data-direction="Vertical" 
+                    data-show-icon="true" 
+                    data-show-left-angle="false" 
+                    data-show-right-angle="false" 
+                    data-state="Idle" 
+                    data-type="Link" 
+                    style={{
+                      alignSelf: 'stretch',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      gap: '7px',
+                      display: 'inline-flex'
+                    }}
+                  >
                     <div style={{
                       flex: '1 1 0',
                       paddingLeft: '17.50px',
@@ -1155,7 +1185,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                       gap: '7px',
                       display: 'flex'
                     }}>
-                      <div style={{
+                      <div data-size="14x14" style={{
                         width: '14px',
                         height: '14px',
                         position: 'relative',
@@ -1174,13 +1204,21 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                   </div>
 
                   {/* Someone specific Option */}
-                  <div style={{
-                    alignSelf: 'stretch',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    gap: '7px',
-                    display: 'inline-flex'
-                  }}>
+                  <div 
+                    data-direction="Vertical" 
+                    data-show-icon="true" 
+                    data-show-left-angle="false" 
+                    data-show-right-angle="false" 
+                    data-state="Idle" 
+                    data-type="Link" 
+                    style={{
+                      alignSelf: 'stretch',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      gap: '7px',
+                      display: 'inline-flex'
+                    }}
+                  >
                     <div style={{
                       flex: '1 1 0',
                       paddingLeft: '17.50px',
@@ -1192,7 +1230,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                       gap: '7px',
                       display: 'flex'
                     }}>
-                      <div style={{
+                      <div data-size="14x14" style={{
                         width: '14px',
                         height: '14px',
                         position: 'relative',
