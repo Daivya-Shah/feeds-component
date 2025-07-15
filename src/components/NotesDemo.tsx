@@ -19,6 +19,10 @@ export const NotesDemo: React.FC = () => {
     setNotes((prev) => [...prev, note]);
   };
 
+  const handleUpdateNotes = (updated: any[]) => {
+    setNotes(updated);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Notes icon and User buttons */}
@@ -54,6 +58,7 @@ export const NotesDemo: React.FC = () => {
           notes={notes}
           currentAuthor={selectedUser ?? 'Anonymous'}
           onAddNote={handleAddNote}
+          onUpdateNotes={handleUpdateNotes}
         />
       </div>
 
@@ -65,6 +70,7 @@ export const NotesDemo: React.FC = () => {
         notes={notes}
         currentAuthor={selectedUser ?? 'Anonymous'}
         onAddNote={handleAddNote}
+        onUpdateNotes={handleUpdateNotes}
       />
     </div>
   );

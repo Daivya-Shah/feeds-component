@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Sidebar } from 'primereact/sidebar';
+import { Dialog } from 'primereact/dialog';
 import { formatRelativeTime } from '../utils/timeFormatting';
 
 // Real icon assets
@@ -9,6 +10,9 @@ import angleDownIcon from '@/components/icons/angle-down.svg';
 import plusCircleIcon from '@/components/icons/plus-circle.svg';
 import lockIcon from '@/components/icons/lock.svg';
 import usersIcon from '@/components/icons/users.svg';
+import { NoteMenu } from './NoteMenu';
+import commentActionIcon from '@/components/icons/comment-action.svg';
+import angleRightIcon from '@/components/icons/angle-right.svg'; // safeguard but might already exist
 
 // Icons - defined inline to avoid import issues
 const StickyNoteIcon: React.FC<{ className?: string }> = ({ className }) => (
@@ -130,6 +134,7 @@ interface NotesFeedSidebarProps {
   notes?: Note[];
   currentAuthor?: string;
   onAddNote?: (note: Note) => void;
+  onUpdateNotes?: (notes: Note[]) => void;
   inline?: boolean;
 }
 
@@ -203,6 +208,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
   notes = mockNotes,
   currentAuthor = 'User',
   onAddNote,
+  onUpdateNotes,
   inline = false,
 }) => {
 
@@ -214,13 +220,102 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
   const [audienceDropdownOpen, setAudienceDropdownOpen] = useState(false);
   const [selectedAudience, setSelectedAudience] = useState<'Private' | 'Team' | 'Specific'>('Private');
+  const [editingNote, setEditingNote] = useState<Note | null>(null);
+  const [editingContent, setEditingContent] = useState('');
+  const [replyingTo, setReplyingTo] = useState<Note | null>(null);
+  const [replyContent, setReplyContent] = useState('');
+  // Currently opened options-menu inside a note card (by note id)
+  const [activeMenuNoteId, setActiveMenuNoteId] = useState<string | null>(null);
 
   // Ref for auto-scroll functionality
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
 
+  const [localNotes, setLocalNotes] = useState<Note[]>(notes);
+  useEffect(() => setLocalNotes(notes), [notes]);
 
-  const filteredNotes = notes.filter(note => {
+  const handleDeleteNote = (id: string) => {
+    setLocalNotes(prev => {
+      const updated = prev.filter(n => n.id !== id);
+      onUpdateNotes?.(updated);
+      return updated;
+    });
+    setActiveMenuNoteId(null);
+  };
+
+  const handleEditNote = (id: string) => {
+    const note = localNotes.find(n=>n.id===id);
+    if(!note) return;
+    setEditingNote(note);
+    setEditingContent(note.content);
+    setActiveMenuNoteId(null);
+  };
+
+  const handleSaveEdit = () => {
+    if(!editingNote) return;
+    setLocalNotes(prev => {
+      const updated = prev.map(n => n.id === editingNote.id ? { ...n, content: editingContent } : n);
+      onUpdateNotes?.(updated);
+      return updated;
+    });
+    setEditingNote(null);
+    setEditingContent('');
+  };
+
+  const handleCancelEdit = () => {
+    setEditingNote(null);
+    setEditingContent('');
+  };
+
+  const handleChangeAudience = (id: string, aud: 'Private' | 'Team' | 'Specific') => {
+    setLocalNotes(prev => {
+      const updated = prev.map(n => n.id===id ? { ...n, audience: aud }: n);
+      onUpdateNotes?.(updated);
+      return updated;
+    });
+  };
+
+  const handleChangeCategory = (id: string, cat: string) => {
+    setLocalNotes(prev => {
+      const updated = prev.map(n => n.id===id ? { ...n, categories: cat ? [cat] : [] }: n);
+      onUpdateNotes?.(updated);
+      return updated;
+    });
+  };
+
+  const handleReplyClick = (note: Note) => {
+    setReplyingTo(note);
+    setReplyContent('');
+  };
+
+  const handleSaveReply = () => {
+    if(!replyingTo) return;
+    const newReply: Note = {
+      id: Date.now().toString(),
+      author: currentAuthor,
+      content: replyContent,
+      timestamp: new Date(),
+      avatar: 'https://placehold.co/24x24',
+      categories: replyingTo.categories,
+      audience: replyingTo.audience,
+      level: Math.min((replyingTo.level ?? 1) + 1, 4)
+    };
+    setLocalNotes(prev => {
+      const idx = prev.findIndex(n=>n.id===replyingTo.id);
+      const updated = [...prev.slice(0, idx+1), newReply, ...prev.slice(idx+1)];
+      onUpdateNotes?.(updated);
+      return updated;
+    });
+    setReplyingTo(null);
+    setReplyContent('');
+  };
+
+  const handleCancelReply = () => {
+    setReplyingTo(null);
+    setReplyContent('');
+  };
+
+  const filteredNotes = localNotes.filter(note => {
     const matchesSearch = note.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          note.author.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = !selectedCategory || note.categories.includes(selectedCategory);
@@ -299,7 +394,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
         width: '756px',
         height: inline ? 'auto' : '100%',
         boxShadow: '0px 8px 10px -6px rgba(0, 0, 0, 0.10)',
-        overflow: 'hidden',
+        overflow: inline ? 'visible' : 'hidden',
         outline: '1px #E2E8F0 solid',
         outlineOffset: '-1px',
         flexDirection: 'column',
@@ -707,7 +802,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                 width: '738px',
                 justifyContent: 'flex-start',
                 alignItems: 'flex-start',
-                gap: note.level === 2 ? '48px' : '16px',
+                gap: '16px',
                 display: 'inline-flex'
               }}
             >
@@ -736,7 +831,8 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                 justifyContent: 'flex-start',
                 alignItems: 'flex-start',
                 gap: '8px',
-                display: 'inline-flex'
+                display: 'inline-flex',
+                marginLeft: `${((note.level ?? 1)-1)*32}px`
               }}>
                 {/* Timestamp */}
                 <div style={{
@@ -757,7 +853,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                   paddingLeft: '16px',
                   paddingRight: '20px',
                   background: 'white',
-                  overflow: 'hidden',
+                  overflow: 'visible',
                   borderRadius: '12px',
                   outline: '1px #DFE7EF solid',
                   outlineOffset: '-1px',
@@ -833,6 +929,35 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                         </div>
                       </div>
                     </div>
+                    {/* Options icon & menu – only for owner */}
+                    {note.author === currentAuthor ? (
+                      <div style={{ position: 'relative' }}>
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setActiveMenuNoteId(activeMenuNoteId === note.id ? null : note.id);
+                          }}
+                          style={{ cursor: 'pointer', padding: '4px' }}
+                        >
+                          <img src={commentActionIcon} alt="Menu" style={{ width: '16px', height: '16px' }} />
+                        </div>
+
+                        {activeMenuNoteId === note.id && (
+                          <NoteMenu
+                             onClose={() => setActiveMenuNoteId(null)}
+                             onDelete={() => handleDeleteNote(note.id)}
+                             onEdit={() => handleEditNote(note.id)}
+                             onChangeAudience={(aud)=>handleChangeAudience(note.id,aud)}
+                             onChangeCategory={(cat)=>handleChangeCategory(note.id,cat)}
+                          />
+                        )}
+                      </div>
+                    ) : (
+                      // Reply icon for notes not by current user
+                      <div style={{ cursor: 'pointer', padding:'4px' }} onClick={()=>handleReplyClick(note)}>
+                        <img src={plusCircleIcon} alt="Reply" style={{ width:'16px', height:'16px' }} />
+                      </div>
+                    )}
                   </div>
 
                   {/* Note Content */}
@@ -1032,13 +1157,15 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                   />
                 </div>
               </div>
-              {/* Lock icon on right */}
+              {/* Audience icon on right */}
               <div data-dropdown="audience" onClick={() => {
                 setAudienceDropdownOpen(!audienceDropdownOpen);
                 setFilterDropdownOpen(false);
                 setCategoryDropdownOpen(false);
               }} style={{ cursor: 'pointer' }}>
-                <img src={lockIcon} alt="Privacy" style={{ width: '15px', height: '14px' }} />
+                {selectedAudience==='Private' && <img src={lockIcon} alt="Private" style={{ width:'15px',height:'14px' }} />}
+                {selectedAudience==='Team' && <img src={usersIcon} alt="Team" style={{ width:'15px',height:'14px' }} />}
+                {selectedAudience==='Specific' && <span style={{fontSize:'14px',fontWeight:600,color:'#6B7280'}}>@</span>}
               </div>
               
               {/* Audience Dropdown */}
@@ -1517,6 +1644,26 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
       className="notes-feed-sidebar-exact"
     >
       {FeedContent}
+      {/* Edit Note Dialog */}
+      <Dialog header="Edit Note" visible={editingNote!==null} style={{width:'450px'}} onHide={handleCancelEdit} modal>
+        <div style={{display:'flex',flexDirection:'column',gap:'12px'}}>
+          <textarea value={editingContent} onChange={e=>setEditingContent(e.target.value)} style={{width:'100%',minHeight:'120px',resize:'vertical',padding:'8px',border:'1px solid #CBD5E1',borderRadius:'6px'}} />
+          <div style={{display:'flex',justifyContent:'flex-end',gap:'8px'}}>
+            <button onClick={handleCancelEdit} style={{padding:'6px 12px',background:'#E5E7EB',borderRadius:'6px'}}>Cancel</button>
+            <button onClick={handleSaveEdit} style={{padding:'6px 12px',background:'#2563EB',color:'white',borderRadius:'6px'}}>Save</button>
+          </div>
+        </div>
+      </Dialog>
+      {/* Reply Dialog */}
+      <Dialog header={`Reply to ${replyingTo?.author}`} visible={replyingTo!==null} style={{width:'450px'}} onHide={handleCancelReply} modal>
+        <div style={{display:'flex',flexDirection:'column',gap:'12px'}}>
+          <textarea value={replyContent} onChange={e=>setReplyContent(e.target.value)} style={{width:'100%',minHeight:'120px',resize:'vertical',padding:'8px',border:'1px solid #CBD5E1',borderRadius:'6px'}} />
+          <div style={{display:'flex',justifyContent:'flex-end',gap:'8px'}}>
+            <button onClick={handleCancelReply} style={{padding:'6px 12px',background:'#E5E7EB',borderRadius:'6px'}}>Cancel</button>
+            <button onClick={handleSaveReply} style={{padding:'6px 12px',background:'#2563EB',color:'white',borderRadius:'6px'}} disabled={!replyContent.trim()}>Reply</button>
+          </div>
+        </div>
+      </Dialog>
     </Sidebar>
   );
 };
