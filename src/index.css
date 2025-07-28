@@ -153,3 +153,10 @@ All colors MUST be HSL.
 .notes-feed-sidebar-exact .p-sidebar-close {
   display: none !important;
 }
+
+.hover-scale {
+  transition: transform 0.2s ease;
+}
+.hover-scale:hover {
+  transform: scale(1.1);
+}

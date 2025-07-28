@@ -1,6 +1,24 @@
 export function formatRelativeTime(date: Date): string {
   const now = new Date();
   const diffInMs = now.getTime() - date.getTime();
+  // Check future times
+  if (diffInMs < 0) {
+    const futureMs = Math.abs(diffInMs);
+    const futureHours = futureMs / (1000 * 60 * 60);
+    const futureDays = futureHours / 24;
+
+    if (futureHours < 24) {
+      const hrs = Math.ceil(futureHours);
+      return `In ${hrs} hour${hrs !== 1 ? 's' : ''}`;
+    }
+
+    if (futureHours < 48) {
+      return 'Tomorrow';
+    }
+
+    const days = Math.ceil(futureDays);
+    return `In ${days} day${days !== 1 ? 's' : ''}`;
+  }
   const diffInHours = diffInMs / (1000 * 60 * 60);
   const diffInDays = diffInHours / 24;
   const diffInWeeks = diffInDays / 7;

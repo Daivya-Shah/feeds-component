@@ -7,12 +7,16 @@ import { formatRelativeTime } from '../utils/timeFormatting';
 import notesIcon from '@/components/icons/notes.svg';
 import searchIcon from '@/components/icons/search.svg';
 import angleDownIcon from '@/components/icons/angle-down.svg';
-import plusCircleIcon from '@/components/icons/plus-circle.svg';
 import lockIcon from '@/components/icons/lock.svg';
 import usersIcon from '@/components/icons/users.svg';
-import { NoteMenu } from './NoteMenu';
+import trashIcon from '@/components/icons/trash.svg';
+import pencilIcon from '@/components/icons/pencil.svg';
 import commentActionIcon from '@/components/icons/comment-action.svg';
+import commentActionReplyIcon from '@/components/icons/comment-action-reply.svg';
 import angleRightIcon from '@/components/icons/angle-right.svg'; // safeguard but might already exist
+import timesIcon from '@/components/icons/times.svg';
+import plusCircleIcon from '@/components/icons/plus-circle.svg';
+import filterIcon from '@/components/icons/filter.svg';
 
 // Icons - defined inline to avoid import issues
 const StickyNoteIcon: React.FC<{ className?: string }> = ({ className }) => (
@@ -125,6 +129,7 @@ interface Note {
   categories: string[];
   audience: 'Private' | 'Team' | 'Specific';
   level?: number;
+  deleted?: boolean;
 }
 
 interface NotesFeedSidebarProps {
@@ -194,7 +199,7 @@ export const mockNotes: Note[] = [
     author: 'Maria Foster',
     content: 'It sounds like they\'re waiting for the right space, but would be ready to close within a month',
     timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
-    avatar: 'https://placehold.co/50x50',
+    avatar: 'https://placehold.co/24x24',
     categories: ['Team', 'Company'],
     audience: 'Team',
     level: 2
@@ -216,14 +221,18 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
   const [selectedCategory, setSelectedCategory] = useState('');
   const [newNote, setNewNote] = useState('');
   const [noteCategory, setNoteCategory] = useState('');
+  const [inputFocused, setInputFocused] = useState(false);
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
   const [audienceDropdownOpen, setAudienceDropdownOpen] = useState(false);
+  const [searchFocused, setSearchFocused] = useState(false);
   const [selectedAudience, setSelectedAudience] = useState<'Private' | 'Team' | 'Specific'>('Private');
   const [editingNote, setEditingNote] = useState<Note | null>(null);
-  const [editingContent, setEditingContent] = useState('');
   const [replyingTo, setReplyingTo] = useState<Note | null>(null);
   const [replyContent, setReplyContent] = useState('');
+  // Ref for the bottom note input
+  const noteInputRef = useRef<HTMLInputElement>(null);
+  const inputBarRef = useRef<HTMLDivElement>(null);
   // Currently opened options-menu inside a note card (by note id)
   const [activeMenuNoteId, setActiveMenuNoteId] = useState<string | null>(null);
 
@@ -236,7 +245,18 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
 
   const handleDeleteNote = (id: string) => {
     setLocalNotes(prev => {
-      const updated = prev.filter(n => n.id !== id);
+      const updated = prev.map(n =>
+        n.id === id
+          ? {
+              ...n,
+              deleted: true,
+              content: 'This message has been deleted',
+              author: '',
+              avatar: '',
+              categories: [],
+            }
+          : n
+      );
       onUpdateNotes?.(updated);
       return updated;
     });
@@ -244,27 +264,12 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
   };
 
   const handleEditNote = (id: string) => {
-    const note = localNotes.find(n=>n.id===id);
-    if(!note) return;
+    const note = localNotes.find(n => n.id === id);
+    if (!note) return;
     setEditingNote(note);
-    setEditingContent(note.content);
+    setNewNote(note.content);
     setActiveMenuNoteId(null);
-  };
-
-  const handleSaveEdit = () => {
-    if(!editingNote) return;
-    setLocalNotes(prev => {
-      const updated = prev.map(n => n.id === editingNote.id ? { ...n, content: editingContent } : n);
-      onUpdateNotes?.(updated);
-      return updated;
-    });
-    setEditingNote(null);
-    setEditingContent('');
-  };
-
-  const handleCancelEdit = () => {
-    setEditingNote(null);
-    setEditingContent('');
+    // focus handled by effect
   };
 
   const handleChangeAudience = (id: string, aud: 'Private' | 'Team' | 'Specific') => {
@@ -286,6 +291,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
   const handleReplyClick = (note: Note) => {
     setReplyingTo(note);
     setReplyContent('');
+    // focus will be handled by effect
   };
 
   const handleSaveReply = () => {
@@ -359,7 +365,14 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
       setAudienceDropdownOpen(false);
       setCategoryDropdownOpen(false);
     }
-  }, []);
+
+    // Cancel editing or replying if click is outside the input bar
+    if ((editingNote || replyingTo) && inputBarRef.current && !inputBarRef.current.contains(target)) {
+      setEditingNote(null);
+      setReplyingTo(null);
+      setNewNote('');
+    }
+  }, [editingNote, replyingTo]);
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
@@ -368,10 +381,54 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
 
   // Timeline line spans full content area height at all times
 
+  // Focus the note input when entering reply mode
+  useEffect(() => {
+    if (replyingTo) {
+      noteInputRef.current?.focus();
+    }
+  }, [replyingTo]);
+
+  // Focus and highlight input when editing a note
+  useEffect(() => {
+    if (editingNote) {
+      noteInputRef.current?.focus();
+      setInputFocused(true);
+    }
+  }, [editingNote]);
 
   const handleSaveNote = () => {
     if (!newNote.trim()) return;
 
+    if (editingNote) {
+      // update existing note
+      setLocalNotes(prev => {
+        const updated = prev.map(n => n.id === editingNote.id ? { ...n, content: newNote.trim() } : n);
+        onUpdateNotes?.(updated);
+        return updated;
+      });
+      setEditingNote(null);
+    } else if (replyingTo) {
+      // Create a reply note
+      const newReply: Note = {
+        id: Date.now().toString(),
+        author: currentAuthor,
+        content: newNote.trim(),
+        timestamp: new Date(),
+        avatar: 'https://placehold.co/24x24',
+        categories: replyingTo.categories,
+        audience: replyingTo.audience,
+        level: Math.min((replyingTo.level ?? 1) + 1, 4),
+      };
+
+      setLocalNotes(prev => {
+        const idx = prev.findIndex(n => n.id === replyingTo.id);
+        const updated = [...prev.slice(0, idx + 1), newReply, ...prev.slice(idx + 1)];
+        onUpdateNotes?.(updated);
+        return updated;
+      });
+
+      setReplyingTo(null);
+    } else {
     const newNoteObj: Note = {
       id: Date.now().toString(),
       author: currentAuthor,
@@ -384,6 +441,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
     };
 
     onAddNote?.(newNoteObj);
+    }
 
     setNewNote('');
     setNoteCategory('');
@@ -506,7 +564,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                   background: 'white',
                   boxShadow: '0px 1px 2px rgba(18, 18, 23, 0.05)',
                   borderRadius: '6px',
-                  outline: '1px #CBD5E1 solid',
+                  outline: searchFocused ? '2px #026BB6 solid' : '1px #CBD5E1 solid',
                   outlineOffset: '-1px',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
@@ -533,6 +591,8 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                         type="text"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
+                        onFocus={() => setSearchFocused(true)}
+                        onBlur={() => setSearchFocused(false)}
                         placeholder="Search notes"
                         style={{
                           flex: '1 1 0',
@@ -584,7 +644,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                     background: 'white',
                     boxShadow: '0px 1px 2px rgba(18, 18, 23, 0.05)',
                     borderRadius: '6px',
-                    outline: '1px #CBD5E1 solid',
+                    outline: filterDropdownOpen ? '2px #026BB6 solid' : '1px #CBD5E1 solid',
                     outlineOffset: '-1px',
                     justifyContent: 'flex-start',
                     alignItems: 'center',
@@ -593,6 +653,9 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                     cursor: 'pointer'
                   }}
                 >
+                  {/* Filter icon */}
+                  <img src={filterIcon} alt="" style={{ width: '16px', height: '16px' }} />
+
                   <div style={{
                     flex: '1 1 0',
                     flexDirection: 'column',
@@ -618,7 +681,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                         textOverflow: 'ellipsis',
                         whiteSpace: 'nowrap'
                       }}>
-                        {selectedCategory || 'Filter by category'}
+                        {selectedCategory || 'Filter'}
                       </div>
                     </div>
                   </div>
@@ -743,7 +806,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                   paddingTop: '10.50px',
                   paddingBottom: '10.50px',
                   borderRadius: '6px',
-                  outline: '1px #64748B solid',
+                  outline: '1px #CBD5E1 solid',
                   outlineOffset: '-1px',
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -751,8 +814,8 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                   cursor: 'pointer'
                 }}
               >
-                {/* PrimeIcons cross */}
-                <i className="pi pi-times" style={{ fontSize: '14px', color: '#64748B' }}></i>
+                {/* SVG cross icon */}
+                <img src={timesIcon} alt="Close" style={{ width: '14px', height: '14px' }} />
               </div>
             )}
           </div>
@@ -864,6 +927,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                   display: 'flex'
                 }}>
                   {/* Author Header */}
+                  {!note.deleted && (
                   <div style={{
                     alignSelf: 'stretch',
                     justifyContent: 'space-between',
@@ -876,41 +940,24 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                       gap: '8px',
                       display: 'flex'
                     }}>
-                      <div data-variant={note.id === '6' ? '20' : note.id === '2' || note.id === '5' ? '2' : '3'} style={{
+                      <div style={{
                         width: '24px',
                         height: '24px',
                         position: 'relative',
                         borderRadius: '999px',
-                        ...(note.id === '6' && {
-                          overflow: 'hidden',
-                          backgroundImage: 'url(https://placehold.co/24x24)'
-                        })
+                        overflow: 'hidden'
                       }}>
-                        {note.id === '6' ? (
-                          <img style={{
-                            width: '49.80px',
-                            height: '49.80px',
-                            left: '-16.80px',
-                            top: '-0.60px',
-                            position: 'absolute',
-                            borderRadius: '980px'
-                          }}
-                          src="https://placehold.co/50x50"
-                          alt={note.author}
-                          />
-                        ) : (
-                          <img style={{
-                            width: '24px',
-                            height: '24px',
-                            left: '0px',
-                            top: '0px',
-                            position: 'absolute',
-                            borderRadius: '980px'
-                          }}
-                          src={note.avatar}
-                          alt={note.author}
-                          />
-                        )}
+                        <img style={{
+                          width: '24px',
+                          height: '24px',
+                          left: '0',
+                          top: '0',
+                          position: 'absolute',
+                          borderRadius: '999px'
+                        }}
+                        src={note.avatar}
+                        alt={note.author}
+                        />
                       </div>
                       <div style={{
                         justifyContent: 'flex-start',
@@ -939,7 +986,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                           }}
                           style={{ cursor: 'pointer', padding: '4px' }}
                         >
-                          <img src={commentActionIcon} alt="Menu" style={{ width: '16px', height: '16px' }} />
+                          <img src={commentActionIcon} alt="Menu" className="hover-scale" style={{ width: '16px', height: '16px' }} />
                         </div>
 
                         {activeMenuNoteId === note.id && (
@@ -955,10 +1002,11 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                     ) : (
                       // Reply icon for notes not by current user
                       <div style={{ cursor: 'pointer', padding:'4px' }} onClick={()=>handleReplyClick(note)}>
-                        <img src={plusCircleIcon} alt="Reply" style={{ width:'16px', height:'16px' }} />
+                        <img src={commentActionReplyIcon} alt="Reply" className="hover-scale" style={{ width:'16px', height:'16px' }} />
                       </div>
                     )}
                   </div>
+                  )}
 
                   {/* Note Content */}
                   {note.id === '4' ? (
@@ -1002,7 +1050,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                   )}
 
                   {/* Categories */}
-                  <div style={{
+                  {!note.deleted && (<div style={{
                     justifyContent: 'flex-start',
                     alignItems: 'flex-start',
                     gap: '8px',
@@ -1074,7 +1122,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                         }}>{category}</div>
                       </div>
                     ))}
-                  </div>
+                  </div>)}
                 </div>
               </div>
             </div>
@@ -1103,7 +1151,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
             display: 'flex',
             alignItems: 'center'
           }}>
-            <div style={{
+            <div ref={inputBarRef} style={{
               alignSelf: 'stretch',
               flex: '1 1 0',
               paddingLeft: '10.50px',
@@ -1113,7 +1161,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
               background: 'white',
               overflow: 'visible',
               borderRadius: '6px',
-              outline: '1px #D1D5DB solid',
+              outline: inputFocused ? '2px #026BB6 solid' : '1px #D1D5DB solid',
               outlineOffset: '-1px',
               justifyContent: 'flex-start',
               alignItems: 'center',
@@ -1138,10 +1186,13 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                   display: 'inline-flex'
                 }}>
                   <input
+                    ref={noteInputRef}
                     type="text"
                     value={newNote}
                     onChange={(e) => setNewNote(e.target.value)}
-                    placeholder="Enter note"
+                    onFocus={() => setInputFocused(true)}
+                    onBlur={() => setInputFocused(false)}
+                    placeholder={replyingTo ? `Reply to @${replyingTo.author}` : editingNote ? 'Edit note' : 'Enter note'}
                     style={{
                       flex: '1 1 0',
                       border: 'none',
@@ -1163,7 +1214,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                 setFilterDropdownOpen(false);
                 setCategoryDropdownOpen(false);
               }} style={{ cursor: 'pointer' }}>
-                {selectedAudience==='Private' && <img src={lockIcon} alt="Private" style={{ width:'15px',height:'14px' }} />}
+                {selectedAudience==='Private' && <img src={lockIcon} alt="Private" className="hover-scale" style={{ width:'15px',height:'14px' }} />}
                 {selectedAudience==='Team' && <img src={usersIcon} alt="Team" style={{ width:'15px',height:'14px' }} />}
                 {selectedAudience==='Specific' && <span style={{fontSize:'14px',fontWeight:600,color:'#6B7280'}}>@</span>}
               </div>
@@ -1181,7 +1232,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                     paddingBottom: '7px',
                     position: 'absolute',
                     bottom: '100%',
-                    right: '0',
+                    right: 0,
                     background: 'white',
                     borderRadius: '6px',
                     outline: '1px #E5E7EB solid',
@@ -1434,7 +1485,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                 background: 'white',
                 overflow: 'hidden',
                 borderRadius: '6px',
-                outline: '1px #D1D5DB solid',
+                outline: categoryDropdownOpen ? '2px #026BB6 solid' : '1px #D1D5DB solid',
                 outlineOffset: '-1px',
                 justifyContent: 'flex-start',
                 alignItems: 'center',
@@ -1483,7 +1534,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                 paddingBottom: '7px',
                 position: 'absolute',
                 bottom: '100%',
-                left: '0',
+                left: 0,
                 background: 'white',
                 borderRadius: '6px',
                 outline: '1px #E5E7EB solid',
@@ -1644,26 +1695,210 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
       className="notes-feed-sidebar-exact"
     >
       {FeedContent}
-      {/* Edit Note Dialog */}
-      <Dialog header="Edit Note" visible={editingNote!==null} style={{width:'450px'}} onHide={handleCancelEdit} modal>
-        <div style={{display:'flex',flexDirection:'column',gap:'12px'}}>
-          <textarea value={editingContent} onChange={e=>setEditingContent(e.target.value)} style={{width:'100%',minHeight:'120px',resize:'vertical',padding:'8px',border:'1px solid #CBD5E1',borderRadius:'6px'}} />
-          <div style={{display:'flex',justifyContent:'flex-end',gap:'8px'}}>
-            <button onClick={handleCancelEdit} style={{padding:'6px 12px',background:'#E5E7EB',borderRadius:'6px'}}>Cancel</button>
-            <button onClick={handleSaveEdit} style={{padding:'6px 12px',background:'#2563EB',color:'white',borderRadius:'6px'}}>Save</button>
-          </div>
-        </div>
-      </Dialog>
-      {/* Reply Dialog */}
-      <Dialog header={`Reply to ${replyingTo?.author}`} visible={replyingTo!==null} style={{width:'450px'}} onHide={handleCancelReply} modal>
-        <div style={{display:'flex',flexDirection:'column',gap:'12px'}}>
-          <textarea value={replyContent} onChange={e=>setReplyContent(e.target.value)} style={{width:'100%',minHeight:'120px',resize:'vertical',padding:'8px',border:'1px solid #CBD5E1',borderRadius:'6px'}} />
-          <div style={{display:'flex',justifyContent:'flex-end',gap:'8px'}}>
-            <button onClick={handleCancelReply} style={{padding:'6px 12px',background:'#E5E7EB',borderRadius:'6px'}}>Cancel</button>
-            <button onClick={handleSaveReply} style={{padding:'6px 12px',background:'#2563EB',color:'white',borderRadius:'6px'}} disabled={!replyContent.trim()}>Reply</button>
-          </div>
-        </div>
-      </Dialog>
+      {/* Edit Note Dialog removed: editing done inline */}
+      {/* Reply Dialog removed: reply handled inline */}
     </Sidebar>
+  );
+};
+
+// ------------------------
+// Inline NoteMenu component
+// ------------------------
+
+interface NoteMenuProps {
+  onClose: () => void;
+  onEdit: () => void;
+  onDelete: () => void;
+  onChangeAudience: (aud: 'Private' | 'Team' | 'Specific') => void;
+  onChangeCategory: (cat: string) => void;
+}
+
+const NoteMenu: React.FC<NoteMenuProps> = ({ onClose, onEdit, onDelete, onChangeAudience, onChangeCategory }) => {
+  const [submenu, setSubmenu] = useState<null | 'audience' | 'category'>(null);
+  const [submenuDirection, setSubmenuDirection] = useState<'left' | 'right'>('right');
+
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        onClose();
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [onClose]);
+
+  const commonHover = (e: React.MouseEvent<HTMLDivElement>) => {
+    (e.currentTarget as HTMLDivElement).style.background = '#F1F5F9';
+  };
+  const commonLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    (e.currentTarget as HTMLDivElement).style.background = 'transparent';
+  };
+
+  const MenuRow: React.FC<{
+    label: string;
+    iconSrc: string;
+    onClick?: ((e: React.MouseEvent<HTMLDivElement>) => void) | (() => void);
+    onMouseEnter?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  }> = ({ label, iconSrc, onClick, onMouseEnter }) => (
+    <div
+      onClick={(e) => onClick?.(e)}
+      onMouseEnter={(e) => {
+        commonHover(e);
+        onMouseEnter?.(e);
+      }}
+      onMouseLeave={(e) => {
+        commonLeave(e);
+        if (submenu && label !== 'Change audience' && label !== 'Change category') {
+          setSubmenu(null);
+        }
+      }}
+      style={{
+        width: '100%',
+        padding: '6px 8px',
+        borderRadius: '6px',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        cursor: 'pointer',
+        transition: 'background-color 0.15s ease',
+        position: 'relative',
+      }}
+    >
+      <img src={iconSrc} alt="" style={{ width: '16px', height: '16px' }} />
+      <div style={{ color: '#334155', fontSize: 14, fontFamily: 'Inter', lineHeight: '22px' }}>{label}</div>
+
+      {label === 'Change audience' && submenu === 'audience' && <AudienceDropdown direction={submenuDirection} />}
+      {label === 'Change category' && submenu === 'category' && <CategoryDropdown direction={submenuDirection} />}
+          </div>
+  );
+
+  const AudienceDropdown: React.FC<{ direction: 'left' | 'right' }> = ({ direction }) => (
+    <div
+      style={{
+        width: 175,
+        position: 'absolute',
+        left: direction === 'right' ? 'calc(100% + 4px)' : 'auto',
+        right: direction === 'left' ? 'calc(100% + 4px)' : 'auto',
+        top: 0,
+        background: 'white',
+        borderRadius: '6px',
+        outline: '1px #E5E7EB solid',
+        boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+        zIndex: 3000,
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <div style={{ padding: '10.5px 17.5px', fontSize: 14, fontWeight: 700, color: '#374151' }}>Audience</div>
+      {['Private', 'Team', 'Specific'].map((opt) => (
+        <div
+          key={opt}
+          style={{ padding: '10.5px 17.5px', cursor: 'pointer', fontSize: 14, color: '#4B5563', display: 'flex', alignItems: 'center', gap: '8px' }}
+          onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = '#F8FAFC')}
+          onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = 'transparent')}
+          onClick={() => {
+            onChangeAudience(opt as 'Private' | 'Team' | 'Specific');
+            onClose();
+          }}
+        >
+          {opt === 'Private' && <img src={lockIcon} alt="" style={{ width: 11, height: 11 }} />}
+          {opt === 'Team' && <img src={usersIcon} alt="" style={{ width: 11, height: 11 }} />}
+          {opt === 'Specific' && <span style={{ width: 11, display: 'inline-flex', justifyContent: 'center', fontSize: 11, color: '#6B7280' }}>@</span>}
+          <span>{opt === 'Specific' ? 'Someone specific' : opt}</span>
+        </div>
+      ))}
+          </div>
+  );
+
+  const CategoryDropdown: React.FC<{ direction: 'left' | 'right' }> = ({ direction }) => (
+    <div
+      style={{
+        width: 136,
+        position: 'absolute',
+        left: direction === 'right' ? 'calc(100% + 4px)' : 'auto',
+        right: direction === 'left' ? 'calc(100% + 4px)' : 'auto',
+        top: 0,
+        background: 'white',
+        borderRadius: '6px',
+        outline: '1px #E5E7EB solid',
+        boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+        zIndex: 3000,
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <div style={{ padding: '10.5px 17.5px', fontSize: 14, fontWeight: 700, color: '#374151' }}>Categories</div>
+      {['None', 'Company', 'Contact', 'Location', 'Budget', 'Property'].map((cat) => (
+        <div
+          key={cat}
+          style={{ padding: '10.5px 17.5px', cursor: 'pointer', fontSize: 14, color: '#4B5563' }}
+          onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = '#F8FAFC')}
+          onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = 'transparent')}
+          onClick={() => {
+            onChangeCategory(cat === 'None' ? '' : cat);
+            onClose();
+          }}
+        >
+          {cat}
+        </div>
+      ))}
+    </div>
+  );
+
+  return (
+    <div
+      ref={menuRef}
+      data-show-button="true"
+      data-show-menu="true"
+      data-type="Basic"
+      style={{
+        width: 175,
+        minWidth: 175,
+        background: 'white',
+        borderRadius: '6px',
+        outline: '1px #E2E8F0 solid',
+        display: 'inline-flex',
+        flexDirection: 'column',
+        position: 'absolute',
+        top: '100%',
+        right: 0,
+        zIndex: 2000,
+      }}
+    >
+      <div style={{ alignSelf: 'stretch', padding: '3.5px', display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <MenuRow label="Edit note" iconSrc={pencilIcon} onClick={onEdit} />
+        <MenuRow label="Delete note" iconSrc={trashIcon} onClick={onDelete} />
+        <MenuRow
+          label="Change audience"
+          iconSrc={angleRightIcon}
+          onMouseEnter={(e) => {
+            const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+            const menuWidth = 175;
+            const spaceRight = window.innerWidth - rect.right;
+            const spaceLeft = rect.left;
+            setSubmenuDirection(spaceRight < menuWidth + 8 && spaceLeft >= menuWidth + 8 ? 'left' : 'right');
+            setSubmenu('audience');
+          }}
+          onClick={(e) => e.stopPropagation()}
+        />
+        <MenuRow
+          label="Change category"
+          iconSrc={angleRightIcon}
+          onMouseEnter={(e) => {
+            const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+            const menuWidth = 136;
+            const spaceRight = window.innerWidth - rect.right;
+            const spaceLeft = rect.left;
+            setSubmenuDirection(spaceRight < menuWidth + 8 && spaceLeft >= menuWidth + 8 ? 'left' : 'right');
+            setSubmenu('category');
+          }}
+          onClick={(e) => e.stopPropagation()}
+        />
+      </div>
+    </div>
   );
 };
