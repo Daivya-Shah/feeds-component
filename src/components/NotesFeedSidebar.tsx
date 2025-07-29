@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Sidebar } from 'primereact/sidebar';
 import { Dialog } from 'primereact/dialog';
-import { formatRelativeTime } from '../utils/timeFormatting';
 
 // Real icon assets
 import notesIcon from '@/components/icons/notes.svg';
@@ -17,6 +16,44 @@ import angleRightIcon from '@/components/icons/angle-right.svg'; // safeguard bu
 import timesIcon from '@/components/icons/times.svg';
 import plusCircleIcon from '@/components/icons/plus-circle.svg';
 import filterIcon from '@/components/icons/filter.svg';
+
+// Local time formatter (past-oriented)
+const formatRelativeTime = (date: Date): string => {
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffHours = diffMs / (1000 * 60 * 60);
+  const diffDays = diffHours / 24;
+
+  if (diffHours < 24) {
+    if (diffHours < 1) return 'Just now';
+    const hrs = Math.floor(diffHours);
+    return `${hrs} hour${hrs !== 1 ? 's' : ''} ago`;
+  }
+
+  if (diffHours < 48) {
+    return 'Yesterday';
+  }
+
+  if (diffDays < 7) {
+    const days = Math.floor(diffDays);
+    return `${days} day${days !== 1 ? 's' : ''} ago`;
+  }
+
+  if (diffDays < 31) {
+    const weeks = Math.floor(diffDays / 7) || 1;
+    if ((weeks + 1) * 7 >= 31) return '1 month ago';
+    return `${weeks} week${weeks !== 1 ? 's' : ''} ago`;
+  }
+
+  if (diffDays < 365) {
+    const months = Math.floor(diffDays / 30.44) || 1;
+    if (months + 1 >= 12) return '1 year ago';
+    return `${months} month${months !== 1 ? 's' : ''} ago`;
+  }
+
+  const years = Math.floor(diffDays / 365.25);
+  return `${years} year${years !== 1 ? 's' : ''} ago`;
+};
 
 // Icons - defined inline to avoid import issues
 const StickyNoteIcon: React.FC<{ className?: string }> = ({ className }) => (
@@ -452,9 +489,9 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
         width: '756px',
         height: inline ? 'auto' : '100%',
         boxShadow: '0px 8px 10px -6px rgba(0, 0, 0, 0.10)',
-        overflow: inline ? 'visible' : 'hidden',
-        outline: '1px #E2E8F0 solid',
-        outlineOffset: '-1px',
+        overflow: 'hidden',
+        outline: '1px #DFE7EF solid',
+        borderRadius: '12px',
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
@@ -548,7 +585,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
             }}>
               {/* Search Input */}
               <div data-show-helper="false" data-state="Default" data-invalid="False" data-show-right-icon="false" data-show-left-icon="true" data-float-label="False" data-show-label="false" data-show-text="true" data-disabled="False" data-filled="False" data-size="Normal" style={{
-                width: '169px',
+                width: '216px',
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
                 alignItems: 'flex-start',
@@ -622,7 +659,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
               {/* Category Filter */}
               <div data-dropdown="filter" data-show-helper="false" data-state="Default" data-invalid="False" data-show-right-icon="true" data-show-left-icon="false" data-float-label="False" data-show-label="false" data-show-text="true" data-disabled="False" data-filled="False" data-size="Normal" style={{
                 position: 'relative',
-                width: '216px',
+                width: '169px',
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
                 alignItems: 'flex-start',
@@ -696,7 +733,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                     paddingBottom: '7px',
                     position: 'absolute',
                     top: '100%',
-                    left: '0',
+                    right: '0',
                     background: 'white',
                     borderRadius: '6px',
                     outline: '1px #E5E7EB solid',
@@ -947,17 +984,17 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
                         borderRadius: '999px',
                         overflow: 'hidden'
                       }}>
-                        <img style={{
-                          width: '24px',
-                          height: '24px',
+                          <img style={{
+                            width: '24px',
+                            height: '24px',
                           left: '0',
                           top: '0',
-                          position: 'absolute',
+                            position: 'absolute',
                           borderRadius: '999px'
-                        }}
-                        src={note.avatar}
-                        alt={note.author}
-                        />
+                          }}
+                          src={note.avatar}
+                          alt={note.author}
+                          />
                       </div>
                       <div style={{
                         justifyContent: 'flex-start',
@@ -1461,7 +1498,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
           {/* Category Dropdown */}
           <div data-dropdown="category" data-disabled="False" data-filled="False" data-float-label="True" data-invalid="False" data-show-float-label="false" data-show-helper="false" data-show-left-icon="false" data-show-right-icon="true" data-show-text="true" data-state="Default" style={{
             position: 'relative',
-            width: '169px',
+            width: '136px',
             height: '40px',
             flexDirection: 'column',
             justifyContent: 'flex-start',

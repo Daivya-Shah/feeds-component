@@ -1,16 +1,51 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Sidebar } from 'primereact/sidebar';
 import { Dialog } from 'primereact/dialog';
-import { formatRelativeTime } from '../utils/timeFormatting';
-
 // Real icon assets
 import boltIcon from '@/components/icons/bolt.svg';
 import searchIcon from '@/components/icons/search.svg';
 import angleRightIcon from '@/components/icons/angle-right.svg'; // safeguard but might already exist
 import timesIcon from '@/components/icons/times.svg';
 import typeIcon from '@/components/icons/type.svg';
-import plusIcon from '@/components/icons/plus.svg';
 import buildingIcon from '@/components/icons/building.svg';
+
+// Local time formatter (past-oriented)
+const formatRelativeTime = (date: Date): string => {
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffHours = diffMs / (1000 * 60 * 60);
+  const diffDays = diffHours / 24;
+
+  if (diffHours < 24) {
+    if (diffHours < 1) return 'Just now';
+    const hrs = Math.floor(diffHours);
+    return `${hrs} hour${hrs !== 1 ? 's' : ''} ago`;
+  }
+
+  if (diffHours < 48) {
+    return 'Yesterday';
+  }
+
+  if (diffDays < 7) {
+    const days = Math.floor(diffDays);
+    return `${days} day${days !== 1 ? 's' : ''} ago`;
+  }
+
+  if (diffDays < 31) {
+    const weeks = Math.floor(diffDays / 7) || 1;
+    if ((weeks + 1) * 7 >= 31) return '1 month ago';
+    return `${weeks} week${weeks !== 1 ? 's' : ''} ago`;
+  }
+
+  if (diffDays < 365) {
+    const months = Math.floor(diffDays / 30.44) || 1;
+    if (months + 1 >= 12) return '1 year ago';
+    return `${months} month${months !== 1 ? 's' : ''} ago`;
+  }
+
+  const years = Math.floor(diffDays / 365.25);
+  return `${years} year${years !== 1 ? 's' : ''} ago`;
+};
 
 // Icons - defined inline to avoid import issues
 const StickyNoteIcon: React.FC<{ className?: string }> = ({ className }) => (
@@ -304,9 +339,9 @@ export const ActivityFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
         width: '756px',
         height: inline ? 'auto' : '100%',
         boxShadow: '0px 8px 10px -6px rgba(0, 0, 0, 0.10)',
-        overflow: inline ? 'visible' : 'hidden',
-        outline: '1px #E2E8F0 solid',
-        outlineOffset: '-1px',
+        overflow: 'hidden',
+        outline: '1px #DFE7EF solid',
+        borderRadius: '12px',
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
@@ -400,7 +435,7 @@ export const ActivityFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
             }}>
               {/* Search Input */}
               <div data-show-helper="false" data-state="Default" data-invalid="False" data-show-right-icon="false" data-show-left-icon="true" data-float-label="False" data-show-label="false" data-show-text="true" data-disabled="False" data-filled="False" data-size="Normal" style={{
-                width: '169px',
+                width: '216px',
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
                 alignItems: 'flex-start',
@@ -465,36 +500,6 @@ export const ActivityFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
               </div>
             </div>
 
-            {/* Plus icon container */}
-            <div style={{
-              width: '40px',
-              height: '40px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              background: 'white',
-              boxShadow: '0px 1px 2px rgba(18,18,23,0.05)',
-              borderRadius: '6px',
-              outline: '1px #7AC8FF solid',
-              outlineOffset: '-1px',
-              cursor: 'pointer'
-            }} onClick={() => {
-              const newId = (Date.now()).toString();
-              const newNote = {
-                id: newId,
-                author: currentAuthor,
-                content: '',
-                timestamp: new Date(),
-                avatar: 'https://placehold.co/24x24',
-                categories: [],
-                audience: 'Team',
-                level: 1
-              } as Note;
-              setLocalNotes(prev => [...prev, newNote]);
-            }}>
-              <img src={plusIcon} alt="Add" style={{ width: '16px', height: '16px' }} />
-            </div>
-
             {/* Close Button (hidden in inline mode) */}
             {!inline && (
               <div data-disabled="False" data-icon-only="True" data-link="False" data-severity="Secondary" data-show-left-icon="false" data-show-right-icon="false" data-state="Idle" data-rounded="False" data-raised="False" data-text="False" data-outlined="True" 
@@ -550,7 +555,10 @@ export const ActivityFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
             }}></div>
 
           {/* Notes */}
-          {filteredNotes.slice().reverse().map((note, index) => (
+          {filteredNotes
+            .slice()
+            .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
+            .map((note, index) => (
             <div 
               key={note.id}
               data-feed-type="Note"

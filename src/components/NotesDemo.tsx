@@ -36,7 +36,7 @@ export const NotesDemo: React.FC = () => {
             onClick={() => {
               setSelectedUser(user);
             }}
-            className={`px-3 py-2 rounded text-sm font-medium ${
+            className={`h-6 px-3 rounded text-sm font-medium flex items-center ${
               selectedUser === user 
                 ? 'bg-blue-500 text-white hover:bg-blue-600' 
                 : 'bg-slate-100 text-gray-900 hover:bg-slate-200'
