@@ -28,7 +28,20 @@ export const NotesDemo: React.FC = () => {
       {/* Notes icon and User buttons */}
       <div className="px-4 pt-4 pb-4 flex gap-2 flex-wrap items-center">
         <button onClick={() => setSidebarVisible(true)} aria-label="Open notes sidebar">
-          <img src={notesIcon} alt="Notes" className="w-6 h-6 object-contain" />
+          <div style={{ position: 'relative', width: '24px', height: '24px' }}>
+            <img src={notesIcon} alt="Notes" className="w-6 h-6 object-contain" />
+            {notes.length > 0 && (
+              <span style={{
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                width: '6px',
+                height: '6px',
+                borderRadius: '999px',
+                background: '#1D4ED8'
+              }} />
+            )}
+          </div>
         </button>
         {users.map((user) => (
           <button
