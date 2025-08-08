@@ -270,6 +270,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
   // Ref for the bottom note input
   const noteInputRef = useRef<HTMLInputElement>(null);
   const inputBarRef = useRef<HTMLDivElement>(null);
+  const footerRef = useRef<HTMLDivElement>(null);
   // Currently opened options-menu inside a note card (by note id)
   const [activeMenuNoteId, setActiveMenuNoteId] = useState<string | null>(null);
 
@@ -327,7 +328,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
 
   const handleReplyClick = (note: Note) => {
     setReplyingTo(note);
-    setReplyContent('');
+    setNewNote('');
     // focus will be handled by effect
   };
 
@@ -403,8 +404,8 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
       setCategoryDropdownOpen(false);
     }
 
-    // Cancel editing or replying if click is outside the input bar
-    if ((editingNote || replyingTo) && inputBarRef.current && !inputBarRef.current.contains(target)) {
+    // Cancel editing or replying if click is outside the footer area (input + save button)
+    if ((editingNote || replyingTo) && footerRef.current && !footerRef.current.contains(target)) {
       setEditingNote(null);
       setReplyingTo(null);
       setNewNote('');
@@ -422,6 +423,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
   useEffect(() => {
     if (replyingTo) {
       noteInputRef.current?.focus();
+      setInputFocused(true);
     }
   }, [replyingTo]);
 
@@ -459,6 +461,10 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
 
       setLocalNotes(prev => {
         const idx = prev.findIndex(n => n.id === replyingTo.id);
+        if (idx === -1) {
+          console.error('Parent note not found for reply');
+          return prev;
+        }
         const updated = [...prev.slice(0, idx + 1), newReply, ...prev.slice(idx + 1)];
         onUpdateNotes?.(updated);
         return updated;
@@ -1167,7 +1173,7 @@ export const NotesFeedSidebar: React.FC<NotesFeedSidebarProps> = ({
         </div>
 
         {/* Footer - Add Note */}
-        <div data-state="Empty" style={{
+        <div ref={footerRef} data-state="Empty" style={{
           alignSelf: 'stretch',
           height: '72px',
           paddingLeft: '24px',
